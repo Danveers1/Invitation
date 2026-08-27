@@ -1,526 +1,166 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-
 <!-- ============================================================
-     SEO META TAGS
+     CINEMATIC WEDDING OPENING
      ============================================================ -->
-<title>Danveer &amp; Harman Preet | Wedding Invitation | 25 October 2026</title>
-<meta name="description" content="With the blessings of Waheguru, Danveer Singh &amp; Harman Preet Kaur invite you to celebrate their Shagun, Ring Ceremony &amp; Anand Karaj in Amritsar. 23–25 October 2026.">
-<meta name="keywords" content="Sikh wedding invitation, Danveer Singh, Harman Preet Kaur, Anand Karaj, Amritsar wedding, Punjabi wedding invite">
-<meta name="author" content="Danveer Singh & Harman Preet Kaur">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://your-username.github.io/wedding-invite/">
+<section class="wedding-opening" id="weddingOpening">
 
-<!-- ============================================================
-     OPEN GRAPH / WHATSAPP RICH PREVIEW TAGS
-     Replace og:image with an absolute URL to assets/og-image.jpg
-     once you upload it, e.g.
-     https://your-username.github.io/wedding-invite/assets/og-image.jpg
-     ============================================================ -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="Danveer Singh & Harman Preet Kaur | Wedding Invitation">
-<meta property="og:description" content="ਵਾਹਿਗੁਰੂ ਜੀ ਕਾ ਖਾਲਸਾ, ਵਾਹਿਗੁਰੂ ਜੀ ਕੀ ਫਤਹਿ — Join us to celebrate our Anand Karaj, 25 October 2026, Amritsar.">
-<meta property="og:image" content="assets/og-image.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:url" content="https://your-username.github.io/wedding-invite/">
-<meta property="og:site_name" content="Danveer & Harman Preet — Wedding">
-<meta property="og:locale" content="en_IN">
+  <!-- Ambient background -->
+  <div class="opening-bg"></div>
 
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Danveer Singh & Harman Preet Kaur | Wedding Invitation">
-<meta name="twitter:description" content="Join us to celebrate our Anand Karaj — 25 October 2026, Amritsar.">
-<meta name="twitter:image" content="assets/og-image.jpg">
+  <!-- Floating petals -->
+  <div class="opening-petals" id="openingPetals"></div>
 
-<meta name="theme-color" content="#5C0E17">
+  <!-- Top branding -->
+  <div class="opening-brand">
+    <div class="opening-khanda">ੴ</div>
 
-<!-- Favicon: replace with your own Khanda/monogram icon -->
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E0%A9%B4%3C/text%3E%3C/svg%3E">
-
-<!-- Fonts: Gurmukhi + English display/body pairing -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Marcellus&family=Poppins:wght@300;400;500;600&family=Noto+Serif+Gurmukhi:wght@500;600;700&family=Noto+Sans+Gurmukhi:wght@400;500;600&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="style.css">
-</head>
-<body class="lang-pa" data-audio-playing="false">
-
-<!-- ============================================================
-     HIDDEN SVG SPRITE — reusable ornamental motifs
-     ============================================================ -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <!-- Paisley / kalga corner ornament -->
-    <path id="motif-paisley" d="M2 38C2 16 20 2 40 2c14 0 22 9 22 20 0 9-6 14-13 14-6 0-10-4-10-9 0-4 3-7 6-7 2 0 4 1 4 3" />
-    <!-- Khanda silhouette -->
-    <path id="motif-khanda" d="M50 4 L56 40 L92 46 L56 52 L50 96 L44 52 L8 46 L44 40 Z M50 22 A28 28 0 1 1 49.9 22 M22 50 L18 30 M78 50 L82 30" />
-  </defs>
-</svg>
-
-<!-- ============================================================
-     FLOATING PETALS LAYER (populated by script.js)
-     ============================================================ -->
-<div class="petals-layer" id="petalsLayer" aria-hidden="true"></div>
-
-<!-- ============================================================
-     TOP NAVIGATION
-     ============================================================ -->
-<header class="site-nav" id="siteNav">
-  <a class="nav-brand" href="#home">
-    <svg viewBox="0 0 100 100" class="brand-khanda"><use href="#motif-khanda"/></svg>
-    <span class="brand-text">D&nbsp;<em>&amp;</em>&nbsp;H</span>
-  </a>
-
-  <nav class="nav-links" id="navLinks">
-    <a href="#home" class="i18n" data-en="Home" data-pa="ਘਰ">ਘਰ</a>
-    <a href="#countdown" class="i18n" data-en="Countdown" data-pa="ਗਿਣਤੀ">ਗਿਣਤੀ</a>
-    <a href="#events" class="i18n" data-en="Events" data-pa="ਸਮਾਗਮ">ਸਮਾਗਮ</a>
-    <a href="#parents" class="i18n" data-en="Family" data-pa="ਪਰਿਵਾਰ">ਪਰਿਵਾਰ</a>
-    <a href="#gallery" class="i18n" data-en="Gallery" data-pa="ਤਸਵੀਰਾਂ">ਤਸਵੀਰਾਂ</a>
-    <a href="#rsvp" class="i18n" data-en="RSVP" data-pa="ਹਾਜ਼ਰੀ">ਹਾਜ਼ਰੀ</a>
-  </nav>
-
-  <div class="nav-controls">
-    <!-- Language toggle -->
-    <button class="lang-toggle" id="langToggle" aria-label="Toggle language / ਭਾਸ਼ਾ ਬਦਲੋ">
-      <span class="lang-pill" data-lang-btn="pa">ਪੰ</span>
-      <span class="lang-pill" data-lang-btn="en">EN</span>
-    </button>
-
-    <!-- Music toggle: muted by default per browser autoplay policy -->
-    <button class="music-toggle" id="musicToggle" aria-label="Play shabad music" aria-pressed="false">
-      <svg viewBox="0 0 24 24" class="icon-note"><path d="M9 18V5l12-2v13" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="18" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="18" cy="16" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
-      <svg viewBox="0 0 24 24" class="icon-mute" hidden><path d="M9 18V5l12-2v13" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="18" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="18" cy="16" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/><line x1="3" y1="3" x2="21" y2="21" stroke="currentColor" stroke-width="1.6"/></svg>
-    </button>
-
-    <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</header>
-
-<!-- Background shabad audio. Replace src with your own royalty-cleared instrumental shabad file. -->
-<audio id="shabadAudio" loop preload="none">
-  <source src="assets/shabad-instrumental.mp3" type="audio/mpeg">
-</audio>
-
-<!-- ============================================================
-     HERO SECTION
-     ============================================================ -->
-<section class="hero" id="home">
-  <div class="hero-media" aria-hidden="true">
-    <!-- Replace this div's background in style.css (.hero-media) with
-         url('assets/couple-hero.jpg') for the real photograph.
-         An ornamental placeholder is shown until then. -->
-    <div class="hero-photo-placeholder">
-      <span class="hero-mono">D<em>&amp;</em>H</span>
-    </div>
-    <div class="hero-overlay"></div>
-    <div class="hero-arch"></div>
-  </div>
-
-  <div class="hero-content">
-    <div class="ik-onkar" aria-hidden="true">ੴ</div>
-
-    <p class="hero-blessing pa-script">
-      ਵਾਹਿਗੁਰੂ ਜੀ ਕਾ ਖਾਲਸਾ<br>ਵਾਹਿਗੁਰੂ ਜੀ ਕੀ ਫਤਹਿ
-    </p>
-    <p class="hero-blessing-en">With the blessings of Waheguru, we invite you to celebrate the joyous union of</p>
-
-    <h1 class="hero-names">
-      <span class="name">Danveer Singh</span>
-      <span class="amp">&amp;</span>
-      <span class="name">Harman Preet Kaur</span>
-    </h1>
-
-    <p class="hero-date">
-      <span class="i18n" data-en="23 – 25 October 2026 · Amritsar" data-pa="23 – 25 ਅਕਤੂਬਰ 2026 · ਅੰਮ੍ਰਿਤਸਰ">23 – 25 ਅਕਤੂਬਰ 2026 · ਅੰਮ੍ਰਿਤਸਰ</span>
-    </p>
-
-    <button class="btn-open-invitation" id="openInvitation">
-      <span class="i18n" data-en="Open Invitation" data-pa="ਸੱਦਾ ਖੋਲ੍ਹੋ">ਸੱਦਾ ਖੋਲ੍ਹੋ</span>
-      <span class="btn-shine"></span>
-    </button>
-  </div>
-
-  <div class="scroll-cue" aria-hidden="true"><span></span></div>
-</section>
-
-<!-- ============================================================
-     COUNTDOWN
-     ============================================================ -->
-<section class="countdown-section" id="countdown">
-  <div class="section-eyebrow">
-    <span class="eyebrow-line"></span>
-    <span class="i18n" data-en="Until We Say Anand Karaj" data-pa="ਆਨੰਦ ਕਾਰਜ ਤੱਕ">ਆਨੰਦ ਕਾਰਜ ਤੱਕ</span>
-    <span class="eyebrow-line"></span>
-  </div>
-  <h2 class="section-title">
-    <span class="pa">ਵਿਆਹ ਦੀ ਗਿਣਤੀ</span>
-    <span class="en">Wedding Countdown</span>
-  </h2>
-
-  <div class="countdown-grid" id="countdownGrid" data-target="2026-10-25T11:00:00+05:30">
-    <div class="countdown-cell">
-      <span class="countdown-num" id="cdDays">00</span>
-      <span class="countdown-label i18n" data-en="Days" data-pa="ਦਿਨ">ਦਿਨ</span>
-    </div>
-    <div class="countdown-cell">
-      <span class="countdown-num" id="cdHours">00</span>
-      <span class="countdown-label i18n" data-en="Hours" data-pa="ਘੰਟੇ">ਘੰਟੇ</span>
-    </div>
-    <div class="countdown-cell">
-      <span class="countdown-num" id="cdMinutes">00</span>
-      <span class="countdown-label i18n" data-en="Minutes" data-pa="ਮਿੰਟ">ਮਿੰਟ</span>
-    </div>
-    <div class="countdown-cell">
-      <span class="countdown-num" id="cdSeconds">00</span>
-      <span class="countdown-label i18n" data-en="Seconds" data-pa="ਸਕਿੰਟ">ਸਕਿੰਟ</span>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     INTERACTIVE EVENT SELECTOR
-     ============================================================ -->
-<section class="events-section" id="events">
-  <div class="section-eyebrow">
-    <span class="eyebrow-line"></span>
-    <span class="i18n" data-en="The Celebrations" data-pa="ਸਮਾਗਮ">ਸਮਾਗਮ</span>
-    <span class="eyebrow-line"></span>
-  </div>
-  <h2 class="section-title">
-    <span class="pa">ਸਾਡੇ ਸਮਾਗਮ</span>
-    <span class="en">Our Wedding Events</span>
-  </h2>
-
-  <div class="event-tabs" role="tablist" aria-label="Wedding events">
-    <button class="event-tab active" role="tab" aria-selected="true" data-tab="shagun" id="tabBtnShagun">
-      <span class="tab-num">01</span>
-      <span class="tab-titles">
-        <span class="pa">ਸ਼ਗਨ ਅਤੇ ਰਿੰਗ ਸੈਰੇਮਨੀ</span>
-        <span class="en">Shagun &amp; Ring Ceremony</span>
-      </span>
-    </button>
-    <button class="event-tab" role="tab" aria-selected="false" data-tab="anand" id="tabBtnAnand">
-      <span class="tab-num">02</span>
-      <span class="tab-titles">
-        <span class="pa">ਆਨੰਦ ਕਾਰਜ</span>
-        <span class="en">Anand Karaj</span>
-      </span>
-    </button>
-  </div>
-
-  <div class="event-panels">
-
-    <!-- Panel 1: Shagun & Ring Ceremony -->
-    <article class="event-panel active" id="panel-shagun" role="tabpanel" aria-labelledby="tabBtnShagun">
-      <div class="event-card glass-card">
-        <div class="event-card-head">
-          <h3>
-            <span class="pa">ਸ਼ਗਨ ਅਤੇ ਰਿੰਗ ਸੈਰੇਮਨੀ</span>
-            <span class="en">Shagun &amp; Ring Ceremony</span>
-          </h3>
-        </div>
-
-        <div class="event-meta">
-          <div class="meta-item">
-            <span class="meta-label i18n" data-en="Date" data-pa="ਤਾਰੀਖ">ਤਾਰੀਖ</span>
-            <span class="meta-value i18n" data-en="23 October 2026" data-pa="23 ਅਕਤੂਬਰ 2026">23 ਅਕਤੂਬਰ 2026</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label i18n" data-en="Time" data-pa="ਸਮਾਂ">ਸਮਾਂ</span>
-            <span class="meta-value i18n" data-en="6:30 PM onwards" data-pa="ਸ਼ਾਮ 6:30 ਵਜੇ ਤੋਂ">ਸ਼ਾਮ 6:30 ਵਜੇ ਤੋਂ</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label i18n" data-en="Venue" data-pa="ਸਥਾਨ">ਸਥਾਨ</span>
-            <span class="meta-value">Regenta Central Amritsar</span>
-          </div>
-        </div>
-
-        <div class="event-schedule">
-          <h4 class="i18n" data-en="Schedule" data-pa="ਸਮਾਂ-ਸਾਰਣੀ">ਸਮਾਂ-ਸਾਰਣੀ</h4>
-          <ul>
-            <li><time>6:30 PM</time><span class="i18n" data-en="Welcome &amp; High Tea" data-pa="ਜੀ ਆਇਆਂ ਨੂੰ ਅਤੇ ਹਾਈ ਟੀ">ਜੀ ਆਇਆਂ ਨੂੰ ਅਤੇ ਹਾਈ ਟੀ</span></li>
-            <li><time>7:00 PM</time><span class="i18n" data-en="Shagun Ceremony" data-pa="ਸ਼ਗਨ ਸੈਰੇਮਨੀ">ਸ਼ਗਨ ਸੈਰੇਮਨੀ</span></li>
-            <li><time>7:45 PM</time><span class="i18n" data-en="Ring Ceremony" data-pa="ਰਿੰਗ ਸੈਰੇਮਨੀ">ਰਿੰਗ ਸੈਰੇਮਨੀ</span></li>
-            <li><time>8:30 PM</time><span class="i18n" data-en="Dinner" data-pa="ਰਾਤ ਦਾ ਖਾਣਾ">ਰਾਤ ਦਾ ਖਾਣਾ</span></li>
-          </ul>
-        </div>
-
-        <div class="event-actions">
-          <a class="btn-gold" href="https://share.google/AUOrQXmSviukgWEPi" target="_blank" rel="noopener">
-            <span class="i18n" data-en="Navigate" data-pa="ਦਿਸ਼ਾ ਦਿਖਾਓ">ਦਿਸ਼ਾ ਦਿਖਾਓ</span>
-          </a>
-          <button class="btn-outline-gold" data-ics="shagun">
-            <span class="i18n" data-en="Add Shagun to Calendar" data-pa="ਸ਼ਗਨ ਕੈਲੰਡਰ ਵਿੱਚ ਸ਼ਾਮਲ ਕਰੋ">ਸ਼ਗਨ ਕੈਲੰਡਰ ਵਿੱਚ ਸ਼ਾਮਲ ਕਰੋ</span>
-          </button>
-        </div>
-      </div>
-    </article>
-
-    <!-- Panel 2: Anand Karaj -->
-    <article class="event-panel" id="panel-anand" role="tabpanel" aria-labelledby="tabBtnAnand" hidden>
-      <div class="event-card glass-card">
-        <div class="event-card-head">
-          <h3>
-            <span class="pa">ਆਨੰਦ ਕਾਰਜ</span>
-            <span class="en">Anand Karaj</span>
-          </h3>
-        </div>
-
-        <div class="event-meta">
-          <div class="meta-item">
-            <span class="meta-label i18n" data-en="Date" data-pa="ਤਾਰੀਖ">ਤਾਰੀਖ</span>
-            <span class="meta-value i18n" data-en="25 October 2026" data-pa="25 ਅਕਤੂਬਰ 2026">25 ਅਕਤੂਬਰ 2026</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label i18n" data-en="Time" data-pa="ਸਮਾਂ">ਸਮਾਂ</span>
-            <span class="meta-value">11:00 AM</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label i18n" data-en="Lunch" data-pa="ਲੰਗਰ">ਲੰਗਰ</span>
-            <span class="meta-value">2:00 PM</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label i18n" data-en="Venue" data-pa="ਸਥਾਨ">ਸਥਾਨ</span>
-            <span class="meta-value">Sandoz Amritsar</span>
-          </div>
-        </div>
-
-        <div class="event-schedule">
-          <h4 class="i18n" data-en="Schedule" data-pa="ਸਮਾਂ-ਸਾਰਣੀ">ਸਮਾਂ-ਸਾਰਣੀ</h4>
-          <ul>
-            <li><time>11:00 AM</time><span class="i18n" data-en="Anand Karaj" data-pa="ਆਨੰਦ ਕਾਰਜ">ਆਨੰਦ ਕਾਰਜ</span></li>
-            <li><time>2:00 PM</time><span class="i18n" data-en="Lunch" data-pa="ਲੰਗਰ">ਲੰਗਰ</span></li>
-          </ul>
-        </div>
-
-        <div class="event-actions">
-          <a class="btn-gold" href="https://share.google/m8ugybEKos8E6Q6jq" target="_blank" rel="noopener">
-            <span class="i18n" data-en="Navigate" data-pa="ਦਿਸ਼ਾ ਦਿਖਾਓ">ਦਿਸ਼ਾ ਦਿਖਾਓ</span>
-          </a>
-          <button class="btn-outline-gold" data-ics="anand">
-            <span class="i18n" data-en="Add Wedding to Calendar" data-pa="ਵਿਆਹ ਕੈਲੰਡਰ ਵਿੱਚ ਸ਼ਾਮਲ ਕਰੋ">ਵਿਆਹ ਕੈਲੰਡਰ ਵਿੱਚ ਸ਼ਾਮਲ ਕਰੋ</span>
-          </button>
-        </div>
-      </div>
-    </article>
-
-  </div>
-</section>
-
-<!-- ============================================================
-     PARENTS / FAMILY SECTION
-     ============================================================ -->
-<section class="parents-section" id="parents">
-  <div class="section-eyebrow">
-    <span class="eyebrow-line"></span>
-    <span class="i18n" data-en="With Love &amp; Blessings Of" data-pa="ਸ਼ੁਭ ਆਸ਼ੀਰਵਾਦ ਸਹਿਤ">ਸ਼ੁਭ ਆਸ਼ੀਰਵਾਦ ਸਹਿਤ</span>
-    <span class="eyebrow-line"></span>
-  </div>
-  <h2 class="section-title">
-    <span class="pa">ਪਰਿਵਾਰ</span>
-    <span class="en">Our Families</span>
-  </h2>
-
-  <div class="parents-grid">
-    <div class="parents-card glass-card">
-      <span class="parents-kicker i18n" data-en="Groom's Family" data-pa="ਲਾੜੇ ਦਾ ਪਰਿਵਾਰ">ਲਾੜੇ ਦਾ ਪਰਿਵਾਰ</span>
-      <h3 class="parents-child">Danveer Singh</h3>
-      <ul class="parents-list">
-        <li><span class="i18n" data-en="Father" data-pa="ਪਿਤਾ ਜੀ">ਪਿਤਾ ਜੀ</span><strong>Harvinder Singh</strong></li>
-        <li><span class="i18n" data-en="Mother" data-pa="ਮਾਤਾ ਜੀ">ਮਾਤਾ ਜੀ</span><strong>Vivek Kaur</strong></li>
-      </ul>
+    <div class="monogram">
+      D <span>♡</span> H
     </div>
 
-    <div class="parents-divider" aria-hidden="true">
-      <svg viewBox="0 0 100 100" class="divider-khanda"><use href="#motif-khanda"/></svg>
-    </div>
-
-    <div class="parents-card glass-card">
-      <span class="parents-kicker i18n" data-en="Bride's Family" data-pa="ਲਾੜੀ ਦਾ ਪਰਿਵਾਰ">ਲਾੜੀ ਦਾ ਪਰਿਵਾਰ</span>
-      <h3 class="parents-child">Harman Preet Kaur</h3>
-      <ul class="parents-list">
-        <li><span class="i18n" data-en="Father" data-pa="ਪਿਤਾ ਜੀ">ਪਿਤਾ ਜੀ</span><strong>Mandeep Singh</strong></li>
-        <li><span class="i18n" data-en="Mother" data-pa="ਮਾਤਾ ਜੀ">ਮਾਤਾ ਜੀ</span><strong>Parminder Kaur</strong></li>
-        <li><span class="i18n" data-en="Grandmother" data-pa="ਦਾਦੀ ਜੀ">ਦਾਦੀ ਜੀ</span><strong>Manjeet Kaur</strong></li>
-      </ul>
+    <div class="opening-subtitle">
+      OUR FOREVER BEGINS...
     </div>
   </div>
-</section>
 
-<!-- ============================================================
-     WEDDING QUOTE
-     ============================================================ -->
-<section class="quote-section">
-  <div class="quote-frame">
-    <svg viewBox="0 0 100 100" class="quote-khanda" aria-hidden="true"><use href="#motif-khanda"/></svg>
-    <blockquote>
-      <p class="pa-script quote-pa">
-        ਧੰਨ ਪਿਰੁ ਏਹੁ ਨ ਆਖੀਅਨਿ, ਬਹਨਿ ਇਕਠੇ ਹੋਇ ॥<br>
-        ਏਕ ਜੋਤਿ ਦੁਇ ਮੂਰਤੀ, ਧਨੁ ਪਿਰੁ ਕਹੀਐ ਸੋਇ ॥
+  <!-- ========================================================
+       COUPLE
+       ======================================================== -->
+  <div class="animated-couple">
+
+    <div class="couple-glow"></div>
+
+    <div class="groom-character">
+      <img
+        src="assets/groom-wedding.png"
+        alt="Danveer Singh"
+      >
+    </div>
+
+    <div class="bride-character">
+      <img
+        src="assets/bride-wedding.png"
+        alt="Harman Preet Kaur"
+      >
+    </div>
+
+  </div>
+
+
+  <!-- ========================================================
+       OPENING GATES
+       ======================================================== -->
+  <div class="gate gate-left">
+    <div class="gate-inner">
+      <div class="gate-khanda">☬</div>
+      <div class="gate-floral">❧</div>
+    </div>
+  </div>
+
+  <div class="gate gate-right">
+    <div class="gate-inner">
+      <div class="gate-khanda">☬</div>
+      <div class="gate-floral">❧</div>
+    </div>
+  </div>
+
+
+  <!-- ========================================================
+       OPEN BUTTON
+       ======================================================== -->
+  <button
+    class="open-wedding"
+    id="openInvitation"
+    type="button"
+  >
+
+    <span class="open-wedding-small">
+      YOU ARE INVITED
+    </span>
+
+    <span class="open-wedding-main">
+      Tap to Open
+    </span>
+
+    <span class="open-hand">☝</span>
+
+    <span class="open-shimmer"></span>
+
+  </button>
+
+
+  <!-- ========================================================
+       SCRATCH REVEAL
+       ======================================================== -->
+  <div class="scratch-screen" id="scratchScreen">
+
+    <div class="scratch-content">
+
+      <p class="scratch-kicker">
+        A SPECIAL DATE
       </p>
-      <p class="quote-en">Two souls, one divine light, united with the blessings of Waheguru.</p>
-    </blockquote>
-  </div>
-</section>
 
-<!-- ============================================================
-     GALLERY
-     ============================================================ -->
-<!-- <section class="gallery-section" id="gallery">
-  <div class="section-eyebrow">
-    <span class="eyebrow-line"></span>
-    <span class="i18n" data-en="A Few Moments" data-pa="ਕੁਝ ਖੂਬਸੂਰਤ ਪਲ">ਕੁਝ ਖੂਬਸੂਰਤ ਪਲ</span>
-    <span class="eyebrow-line"></span>
-  </div>
-  <h2 class="section-title">
-    <span class="pa">ਤਸਵੀਰਾਂ</span>
-    <span class="en">Gallery</span>
-  </h2>
+      <h2>
+        Scratch the Heart
+      </h2>
 
-  <div class="carousel" id="carousel">
-    <div class="carousel-track" id="carouselTrack">
-      <!-- Slide 1: the couple photograph. Replace src with assets/couple-1.jpg -->
-     <!--  <figure class="carousel-slide">
-        <img class="placeholder-frame" loading="lazy"
-             src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 1000'%3E%3Crect width='800' height='1000' fill='%23f3e9d2'/%3E%3C/svg%3E"
-             alt="Danveer Singh and Harman Preet Kaur">
-        <figcaption>
-          <span class="pa">ਲਾੜਾ ਅਤੇ ਲਾੜੀ</span>
-          <span class="en">The Couple</span>
-        </figcaption>
-      </figure>
-      <!-- Additional placeholder slides — swap each src for assets/gallery-2.jpg, gallery-3.jpg, etc. -->
-      <!-- <figure class="carousel-slide is-placeholder">
-        <div class="placeholder-frame placeholder-add">
-          <span>+</span>
-          <p class="i18n" data-en="Add Photo" data-pa="ਤਸਵੀਰ ਸ਼ਾਮਲ ਕਰੋ">ਤਸਵੀਰ ਸ਼ਾਮਲ ਕਰੋ</p>
+      <p class="scratch-instruction">
+        ✦ Reveal the day our forever begins ✦
+      </p>
+
+
+      <div
+        class="scratch-heart"
+        id="scratchHeart"
+      >
+
+        <!-- Revealed information -->
+        <div class="heart-reveal">
+
+          <span class="heart-date">
+            23 – 25
+          </span>
+
+          <span class="heart-month">
+            OCTOBER
+          </span>
+
+          <span class="heart-year">
+            2026
+          </span>
+
+          <span class="heart-city">
+            AMRITSAR
+          </span>
+
         </div>
-      </figure>
-      <figure class="carousel-slide is-placeholder">
-        <div class="placeholder-frame placeholder-add">
-          <span>+</span>
-          <p class="i18n" data-en="Add Photo" data-pa="ਤਸਵੀਰ ਸ਼ਾਮਲ ਕਰੋ">ਤਸਵੀਰ ਸ਼ਾਮਲ ਕਰੋ</p>
-        </div>
-      </figure>
-      <figure class="carousel-slide is-placeholder">
-        <div class="placeholder-frame placeholder-add">
-          <span>+</span>
-          <p class="i18n" data-en="Add Photo" data-pa="ਤਸਵੀਰ ਸ਼ਾਮਲ ਕਰੋ">ਤਸਵੀਰ ਸ਼ਾਮਲ ਕਰੋ</p>
-        </div>
-      </figure>
-    </div>
 
-    <button class="carousel-arrow prev" id="carouselPrev" aria-label="Previous photo">&#10094;</button>
-    <button class="carousel-arrow next" id="carouselNext" aria-label="Next photo">&#10095;</button>
-    <div class="carousel-dots" id="carouselDots"></div>
-  </div>
-</section> -->
+        <!-- Scratch surface -->
+        <canvas
+          id="scratchCanvas"
+        ></canvas>
 
-<!-- ============================================================
-     RSVP
-     ============================================================ -->
-<!-- <section class="rsvp-section" id="rsvp">
-  <div class="section-eyebrow">
-    <span class="eyebrow-line"></span>
-    <span class="i18n" data-en="Kindly Respond By 10 October" data-pa="ਕਿਰਪਾ ਕਰਕੇ 10 ਅਕਤੂਬਰ ਤੱਕ ਦੱਸੋ">ਕਿਰਪਾ ਕਰਕੇ 10 ਅਕਤੂਬਰ ਤੱਕ ਦੱਸੋ</span>
-    <span class="eyebrow-line"></span>
-  </div>
-  <h2 class="section-title">
-    <span class="pa">ਹਾਜ਼ਰੀ ਦਰਜ ਕਰੋ</span>
-    <span class="en">RSVP</span>
-  </h2>
-
-  <div class="rsvp-wrap glass-card">
-    <!--
-      FORMSPREE INTEGRATION
-      1. Create a form at https://formspree.io and copy your endpoint.
-      2. Replace YOUR_FORM_ID below with your Formspree form id.
-      3. That's it — no backend code needed, works on GitHub Pages.
-    -->
-    <!-- <form id="rsvpForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-      <div class="form-row">
-        <label for="guestName" class="i18n" data-en="Guest Name" data-pa="ਮਹਿਮਾਨ ਦਾ ਨਾਮ">ਮਹਿਮਾਨ ਦਾ ਨਾਮ</label>
-        <input type="text" id="guestName" name="guest_name" required autocomplete="name">
       </div>
 
-      <div class="form-row">
-        <label for="guestPhone" class="i18n" data-en="Phone Number" data-pa="ਫ਼ੋਨ ਨੰਬਰ">ਫ਼ੋਨ ਨੰਬਰ</label>
-        <input type="tel" id="guestPhone" name="phone" required autocomplete="tel">
+
+      <div class="scratch-names">
+        Danveer <span>&amp;</span> Harman Preet
       </div>
 
-      <div class="form-row">
-        <span class="i18n" data-en="Attending" data-pa="ਸ਼ਾਮਲ ਹੋ ਰਹੇ ਹੋ">ਸ਼ਾਮਲ ਹੋ ਰਹੇ ਹੋ</span>
-        <div class="radio-group">
-          <label class="radio-pill">
-            <input type="radio" name="attending" value="yes" checked>
-            <span class="i18n" data-en="Yes" data-pa="ਹਾਂ">ਹਾਂ</span>
-          </label>
-          <label class="radio-pill">
-            <input type="radio" name="attending" value="no">
-            <span class="i18n" data-en="No" data-pa="ਨਹੀਂ">ਨਹੀਂ</span>
-          </label>
-        </div>
+      <div class="scratch-tagline">
+        A JOURNEY OF TWO SOULS, ONE DESTINY
       </div>
 
-      <div class="form-row">
-        <label for="guestCount" class="i18n" data-en="Number of Guests" data-pa="ਮਹਿਮਾਨਾਂ ਦੀ ਗਿਣਤੀ">ਮਹਿਮਾਨਾਂ ਦੀ ਗਿਣਤੀ</label>
-        <input type="number" id="guestCount" name="guest_count" min="1" max="10" value="1">
-      </div>
-
-      <div class="form-row">
-        <label for="guestMessage" class="i18n" data-en="Message" data-pa="ਸੁਨੇਹਾ">ਸੁਨੇਹਾ</label>
-        <textarea id="guestMessage" name="message" rows="3" placeholder="Blessings for the couple..."></textarea>
-      </div>
-
-      <button type="submit" class="btn-gold btn-rsvp-submit">
-        <span class="i18n" data-en="Send RSVP" data-pa="ਹਾਜ਼ਰੀ ਭੇਜੋ">ਹਾਜ਼ਰੀ ਭੇਜੋ</span>
+      <button
+        class="continue-button"
+        id="continueInvitation"
+        type="button"
+      >
+        Enter Our Wedding
+        <span>→</span>
       </button>
 
-      <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
-    </form> -->
+    </div>
+
   </div>
+
 </section>
-
-<!-- ============================================================
-     ADD TO CALENDAR
-     ============================================================ -->
-<section class="calendar-section" id="calendar">
-  <h2 class="section-title">
-    <span class="pa">ਕੈਲੰਡਰ ਵਿੱਚ ਸ਼ਾਮਲ ਕਰੋ</span>
-    <span class="en">Save the Dates</span>
-  </h2>
-  <div class="calendar-actions">
-    <button class="btn-outline-gold" data-ics="shagun">
-      <span class="i18n" data-en="Add Shagun" data-pa="ਸ਼ਗਨ ਸ਼ਾਮਲ ਕਰੋ">ਸ਼ਗਨ ਸ਼ਾਮਲ ਕਰੋ</span>
-    </button>
-    <button class="btn-outline-gold" data-ics="anand">
-      <span class="i18n" data-en="Add Wedding" data-pa="ਵਿਆਹ ਸ਼ਾਮਲ ਕਰੋ">ਵਿਆਹ ਸ਼ਾਮਲ ਕਰੋ</span>
-    </button>
-  </div>
-</section>
-
-<!-- ============================================================
-     FOOTER
-     ============================================================ -->
-<footer class="site-footer">
-  <svg viewBox="0 0 100 100" class="khanda-watermark" aria-hidden="true"><use href="#motif-khanda"/></svg>
-
-  <div class="footer-content">
-    <div class="ik-onkar footer-ik" aria-hidden="true">ੴ</div>
-    <p class="footer-line-en">We look forward to celebrating with you.</p>
-    <p class="footer-line-pa pa-script">ਤੁਹਾਡੀ ਹਾਜ਼ਰੀ ਸਾਡੇ ਲਈ ਸਭ ਤੋਂ ਵੱਡਾ ਆਸ਼ੀਰਵਾਦ ਹੈ।</p>
-    <p class="footer-names">Danveer Singh <span>&amp;</span> Harman Preet Kaur</p>
-    <p class="footer-credit">Made with love for our wedding day · 25.10.2026</p>
-  </div>
-</footer>
-
-<script src="script.js"></script>
-</body>
-</html>
