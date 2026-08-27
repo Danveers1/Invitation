@@ -1,436 +1,1445 @@
-/* ================================================================
+/* ============================================================
    DANVEER & HARMAN PREET — WEDDING INVITATION
-   script.js — vanilla JS only, no frameworks, GitHub Pages safe
-   ================================================================ */
-(function () {
-  "use strict";
+   script.js
+   ============================================================ */
 
-  /* ---------------------------------------------------------------
-     Utility
-     --------------------------------------------------------------- */
-  const $  = (sel, ctx) => (ctx || document).querySelector(sel);
-  const $$ = (sel, ctx) => Array.from((ctx || document).querySelectorAll(sel));
-  const pad2 = (n) => String(Math.max(0, n)).padStart(2, "0");
+document.addEventListener("DOMContentLoaded", () => {
 
-  document.addEventListener("DOMContentLoaded", init);
+  /* ==========================================================
+     1. ELEMENTS
+     ========================================================== */
 
-  function init() {
-    setupLanguageToggle();
-    setupMobileNav();
-    setupMusicToggle();
-    setupOpenInvitation();
-    setupCountdown();
-    setupEventTabs();
-    setupCarousel();
-    setupRsvpForm();
-    setupIcsButtons();
-    setupScrollReveal();
-    setupPetals();
-  }
+  const opening = document.getElementById("weddingOpening");
+  const openButton = document.getElementById("openInvitation");
+  const scratchScreen = document.getElementById("scratchScreen");
+  const scratchCanvas = document.getElementById("scratchCanvas");
+  const continueButton = document.getElementById("continueInvitation");
+  const petalsLayer = document.getElementById("openingPetals");
 
-  /* ---------------------------------------------------------------
-     1. LANGUAGE TOGGLE (Punjabi <-> English)
-     Body carries .lang-pa (default) or .lang-en; CSS handles the
-     bilingual emphasis swap for .pa/.en blocks. Elements tagged
-     with class="i18n" (nav links, buttons, labels) get their
-     textContent swapped directly from data-en / data-pa.
-     --------------------------------------------------------------- */
-  function setupLanguageToggle() {
-    const btn = $("#langToggle");
-    const body = document.body;
 
-    function applyI18nText(lang) {
-      $$(".i18n").forEach((el) => {
-        const text = lang === "en" ? el.dataset.en : el.dataset.pa;
-        if (text) el.textContent = text;
-      });
-    }
+  /* ==========================================================
+     2. OPENING SCREEN
+     ========================================================== */
 
-    function setLang(lang) {
-      body.classList.toggle("lang-en", lang === "en");
-      body.classList.toggle("lang-pa", lang !== "en");
-      body.setAttribute("lang", lang === "en" ? "en" : "pa");
-      applyI18nText(lang);
-      try { localStorage.setItem("wedding-lang", lang); } catch (e) { /* Safari private mode etc. */ }
-    }
+  if (opening && openButton) {
 
-    let saved = "pa";
-    try { saved = localStorage.getItem("wedding-lang") || "pa"; } catch (e) { /* ignore */ }
-    setLang(saved);
+    openButton.addEventListener("click", () => {
 
-    btn.addEventListener("click", () => {
-      const next = body.classList.contains("lang-en") ? "pa" : "en";
-      setLang(next);
-    });
-  }
-
-  /* ---------------------------------------------------------------
-     2. MOBILE NAV
-     --------------------------------------------------------------- */
-  function setupMobileNav() {
-    const burger = $("#navBurger");
-    const links = $("#navLinks");
-    burger.addEventListener("click", () => {
-      const open = links.classList.toggle("open");
-      burger.setAttribute("aria-expanded", String(open));
-    });
-    links.querySelectorAll("a").forEach((a) =>
-      a.addEventListener("click", () => {
-        links.classList.remove("open");
-        burger.setAttribute("aria-expanded", "false");
-      })
-    );
-  }
-
-  /* ---------------------------------------------------------------
-     3. MUSIC TOGGLE
-     Muted / paused by default in line with browser autoplay
-     policies — playback only starts after an explicit tap.
-     --------------------------------------------------------------- */
-  function setupMusicToggle() {
-    const btn = $("#musicToggle");
-    const audio = $("#shabadAudio");
-
-    btn.addEventListener("click", () => {
-      const playing = btn.getAttribute("aria-pressed") === "true";
-      if (playing) {
-        audio.pause();
-        btn.setAttribute("aria-pressed", "false");
-      } else {
-        audio.volume = 0.5;
-        audio.play().catch(() => {
-          /* File not provided yet — see assets/shabad-instrumental.mp3
-             comment in index.html. Fails silently and gracefully. */
-        });
-        btn.setAttribute("aria-pressed", "true");
-      }
-    });
-  }
-
-  /* ---------------------------------------------------------------
-     4. OPEN INVITATION BUTTON — smooth-scrolls to countdown and
-        gives the hero a subtle "unveil" moment.
-     --------------------------------------------------------------- */
-  function setupOpenInvitation() {
-    const btn = $("#openInvitation");
-    btn.addEventListener("click", () => {
-      const target = $("#countdown");
-      if (target) target.scrollIntoView({ behavior: "smooth" });
-      // Nudge music to start on this explicit user gesture too.
-      const audio = $("#shabadAudio");
-      const musicBtn = $("#musicToggle");
-      if (audio && audio.paused && musicBtn.getAttribute("aria-pressed") !== "true") {
-        audio.volume = 0.5;
-        audio.play().then(() => musicBtn.setAttribute("aria-pressed", "true")).catch(() => {});
-      }
-    });
-  }
-
-  /* ---------------------------------------------------------------
-     5. COUNTDOWN — to 25 October 2026, 11:00 AM IST
-     --------------------------------------------------------------- */
-  function setupCountdown() {
-    const grid = $("#countdownGrid");
-    if (!grid) return;
-    const target = new Date(grid.dataset.target).getTime();
-
-    const els = {
-      d: $("#cdDays"), h: $("#cdHours"), m: $("#cdMinutes"), s: $("#cdSeconds"),
-    };
-    let previous = { d: null, h: null, m: null, s: null };
-
-    function tick() {
-      const now = Date.now();
-      const diff = Math.max(0, target - now);
-
-      const days = Math.floor(diff / 86400000);
-      const hours = Math.floor((diff % 86400000) / 3600000);
-      const minutes = Math.floor((diff % 3600000) / 60000);
-      const seconds = Math.floor((diff % 60000) / 1000);
-
-      updateCell(els.d, pad2(days), "d");
-      updateCell(els.h, pad2(hours), "h");
-      updateCell(els.m, pad2(minutes), "m");
-      updateCell(els.s, pad2(seconds), "s");
-
-      if (diff <= 0) clearInterval(timer);
-    }
-
-    function updateCell(el, value, key) {
-      if (!el) return;
-      if (previous[key] !== value) {
-        el.textContent = value;
-        el.classList.remove("tick");
-        // Force reflow so the animation can restart every second.
-        void el.offsetWidth;
-        el.classList.add("tick");
-        previous[key] = value;
-      }
-    }
-
-    tick();
-    const timer = setInterval(tick, 1000);
-  }
-
-  /* ---------------------------------------------------------------
-     6. EVENT TABS — Shagun & Ring Ceremony / Anand Karaj
-     --------------------------------------------------------------- */
-  function setupEventTabs() {
-    const tabs = $$(".event-tab");
-    const panels = {
-      shagun: $("#panel-shagun"),
-      anand: $("#panel-anand"),
-    };
-
-    tabs.forEach((tab) => {
-      tab.addEventListener("click", () => {
-        const key = tab.dataset.tab;
-        tabs.forEach((t) => {
-          const active = t === tab;
-          t.classList.toggle("active", active);
-          t.setAttribute("aria-selected", String(active));
-        });
-        Object.entries(panels).forEach(([k, panel]) => {
-          if (!panel) return;
-          if (k === key) {
-            panel.hidden = false;
-            panel.classList.add("active");
-            panel.style.animation = "none";
-            void panel.offsetWidth;
-            panel.style.animation = "";
-          } else {
-            panel.hidden = true;
-            panel.classList.remove("active");
-          }
-        });
-      });
-    });
-  }
-
-  /* ---------------------------------------------------------------
-     7. GALLERY CAROUSEL
-     --------------------------------------------------------------- */
-  function setupCarousel() {
-    const track = $("#carouselTrack");
-    const dotsWrap = $("#carouselDots");
-    if (!track) return;
-    const slides = $$(".carousel-slide", track);
-    let index = 0;
-
-    slides.forEach((_, i) => {
-      const dot = document.createElement("button");
-      if (i === 0) dot.classList.add("active");
-      dot.setAttribute("aria-label", "Go to photo " + (i + 1));
-      dot.addEventListener("click", () => goTo(i));
-      dotsWrap.appendChild(dot);
-    });
-    const dots = $$("button", dotsWrap);
-
-    function goTo(i) {
-      index = (i + slides.length) % slides.length;
-      track.style.transform = `translateX(-${index * 100}%)`;
-      dots.forEach((d, di) => d.classList.toggle("active", di === index));
-    }
-
-    $("#carouselPrev").addEventListener("click", () => goTo(index - 1));
-    $("#carouselNext").addEventListener("click", () => goTo(index + 1));
-
-    // Basic swipe support for touch devices
-    let startX = 0;
-    track.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; }, { passive: true });
-    track.addEventListener("touchend", (e) => {
-      const delta = e.changedTouches[0].clientX - startX;
-      if (Math.abs(delta) > 40) goTo(index + (delta < 0 ? 1 : -1));
-    }, { passive: true });
-
-    // Gentle auto-advance, pauses on hover/focus
-    let auto = setInterval(() => goTo(index + 1), 5000);
-    const carousel = $("#carousel");
-    carousel.addEventListener("mouseenter", () => clearInterval(auto));
-    carousel.addEventListener("mouseleave", () => { auto = setInterval(() => goTo(index + 1), 5000); });
-  }
-
-  /* ---------------------------------------------------------------
-     8. RSVP FORM (Formspree-ready)
-     Submits via fetch so we can show an inline confirmation without
-     leaving the page. Works the moment YOUR_FORM_ID is replaced in
-     index.html — see the comment above the <form> tag there.
-     --------------------------------------------------------------- */
-  function setupRsvpForm() {
-    const form = $("#rsvpForm");
-    if (!form) return;
-    const status = $("#formStatus");
-    const isEn = () => document.body.classList.contains("lang-en");
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const endpointConfigured = !form.action.includes("YOUR_FORM_ID");
-
-      status.textContent = isEn() ? "Sending your RSVP…" : "ਤੁਹਾਡੀ ਹਾਜ਼ਰੀ ਭੇਜੀ ਜਾ ਰਹੀ ਹੈ…";
-
-      if (!endpointConfigured) {
-        // No Formspree endpoint wired up yet — let the couple know in
-        // the console, and reassure the guest in the UI regardless.
-        console.info("RSVP: replace YOUR_FORM_ID in index.html with your Formspree endpoint to receive live submissions.");
-        setTimeout(() => {
-          status.textContent = isEn()
-            ? "Thank you! Your RSVP has been noted."
-            : "ਧੰਨਵਾਦ! ਤੁਹਾਡੀ ਹਾਜ਼ਰੀ ਦਰਜ ਕਰ ਲਈ ਗਈ ਹੈ।";
-          form.reset();
-        }, 600);
+      /*
+       * Prevent double clicking
+       */
+      if (opening.classList.contains("is-open")) {
         return;
       }
 
-      try {
-        const res = await fetch(form.action, {
-          method: "POST",
-          body: new FormData(form),
-          headers: { Accept: "application/json" },
-        });
-        if (res.ok) {
-          status.textContent = isEn()
-            ? "Thank you! Your RSVP has been received."
-            : "ਧੰਨਵਾਦ! ਤੁਹਾਡੀ ਹਾਜ਼ਰੀ ਪ੍ਰਾਪਤ ਹੋ ਗਈ ਹੈ।";
-          form.reset();
-        } else {
-          throw new Error("Form submission failed");
-        }
-      } catch (err) {
-        status.textContent = isEn()
-          ? "Something went wrong. Please try again or WhatsApp us directly."
-          : "ਕੁਝ ਗਲਤ ਹੋ ਗਿਆ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ ਜਾਂ ਸਾਨੂੰ ਸਿੱਧਾ WhatsApp ਕਰੋ।";
-      }
+      /*
+       * Open the gates
+       */
+      opening.classList.add("is-open");
+
+      /*
+       * Create romantic petal animation
+       */
+      createPetals(45);
+
+      /*
+       * Show scratch card after gates finish opening
+       */
+      setTimeout(() => {
+
+        opening.classList.add("show-scratch");
+
+        /*
+         * Wait until scratch screen has rendered
+         */
+        setTimeout(() => {
+          initialiseScratchCard();
+        }, 200);
+
+      }, 1800);
+
     });
+
   }
 
-  /* ---------------------------------------------------------------
-     9. ADD TO CALENDAR — generates real .ics files client-side
-     --------------------------------------------------------------- */
-  const ICS_EVENTS = {
-    shagun: {
-      title: "Shagun & Ring Ceremony — Danveer & Harman Preet",
-      description: "Welcome & High Tea, Shagun Ceremony, Ring Ceremony, Dinner.",
-      location: "Regenta Central Amritsar",
-      start: "20261023T183000",
-      end: "20261023T223000",
-    },
-    anand: {
-      title: "Anand Karaj — Danveer & Harman Preet",
-      description: "Anand Karaj ceremony followed by lunch.",
-      location: "Sandoz Amritsar",
-      start: "20261025T110000",
-      end: "20261025T150000",
-    },
-  };
 
-  function setupIcsButtons() {
-    $$("[data-ics]").forEach((btn) => {
-      btn.addEventListener("click", () => downloadIcs(ICS_EVENTS[btn.dataset.ics]));
-    });
-  }
+  /* ==========================================================
+     3. FLOATING PETALS
+     ========================================================== */
 
-  function downloadIcs(evt) {
-    if (!evt) return;
-    // Indian Standard Time, no daylight saving — encode as floating
-    // local time so it displays correctly regardless of the
-    // guest's own timezone setting in most calendar apps.
-    const ics = [
-      "BEGIN:VCALENDAR",
-      "VERSION:2.0",
-      "PRODID:-//Danveer & Harman Preet Wedding//EN",
-      "CALSCALE:GREGORIAN",
-      "BEGIN:VEVENT",
-      `UID:${evt.start}-${Math.random().toString(36).slice(2)}@wedding-invite`,
-      `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, "").split(".")[0]}Z`,
-      `DTSTART;TZID=Asia/Kolkata:${evt.start}`,
-      `DTEND;TZID=Asia/Kolkata:${evt.end}`,
-      `SUMMARY:${escapeIcs(evt.title)}`,
-      `DESCRIPTION:${escapeIcs(evt.description)}`,
-      `LOCATION:${escapeIcs(evt.location)}`,
-      "END:VEVENT",
-      "END:VCALENDAR",
-    ].join("\r\n");
+  function createPetals(number = 30) {
 
-    const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = evt.title.replace(/[^\w]+/g, "-").toLowerCase() + ".ics";
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
-  }
+    if (!petalsLayer) return;
 
-  function escapeIcs(str) {
-    return String(str).replace(/([,;])/g, "\\$1");
-  }
+    for (let i = 0; i < number; i++) {
 
-  /* ---------------------------------------------------------------
-     10. SCROLL REVEAL — fades sections/cards in as they enter view
-     --------------------------------------------------------------- */
-  function setupScrollReveal() {
-    const targets = $$(
-      ".countdown-grid, .event-tabs, .event-panels, .parents-grid, .quote-frame, .carousel, .rsvp-wrap, .calendar-actions"
-    );
-    targets.forEach((el) => el.classList.add("reveal"));
+      const petal = document.createElement("span");
 
-    if (!("IntersectionObserver" in window)) {
-      targets.forEach((el) => el.classList.add("in-view"));
-      return;
-    }
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("in-view");
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-    targets.forEach((el) => io.observe(el));
-  }
-
-  /* ---------------------------------------------------------------
-     11. FLOATING PETALS — lightweight, capped, GPU-friendly
-     --------------------------------------------------------------- */
-  function setupPetals() {
-    const layer = $("#petalsLayer");
-    if (!layer) return;
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduceMotion) return;
-
-    const MAX_PETALS = 18;
-    let active = 0;
-
-    function spawn() {
-      if (active >= MAX_PETALS) return;
-      const petal = document.createElement("div");
       petal.className = "petal";
-      const left = Math.random() * 100;
-      const duration = 9 + Math.random() * 7;
-      const drift = (Math.random() - 0.5) * 160;
-      const size = 8 + Math.random() * 8;
 
-      petal.style.left = left + "vw";
-      petal.style.width = size + "px";
-      petal.style.height = size * 0.7 + "px";
-      petal.style.setProperty("--drift", drift + "px");
-      petal.style.animationDuration = duration + "s";
+      /*
+       * Random horizontal starting position
+       */
+      petal.style.left =
+        Math.random() * 100 + "%";
 
-      layer.appendChild(petal);
-      active++;
-      petal.addEventListener("animationend", () => {
-        petal.remove();
-        active--;
-      });
+      /*
+       * Random falling speed
+       */
+      petal.style.animationDuration =
+        (5 + Math.random() * 7) + "s";
+
+      /*
+       * Random delay
+       */
+      petal.style.animationDelay =
+        Math.random() * 2 + "s";
+
+      /*
+       * Random horizontal movement
+       */
+      petal.style.setProperty(
+        "--drift",
+        (Math.random() * 300 - 150) + "px"
+      );
+
+      /*
+       * Random size
+       */
+      const size =
+        8 + Math.random() * 10;
+
+      petal.style.width =
+        size + "px";
+
+      petal.style.height =
+        (size * 1.45) + "px";
+
+      /*
+       * Random rotation
+       */
+      petal.style.transform =
+        `rotate(${Math.random() * 360}deg)`;
+
+      petalsLayer.appendChild(petal);
+
+      /*
+       * Remove after animation
+       */
+      setTimeout(() => {
+
+        if (petal.parentNode) {
+          petal.remove();
+        }
+
+      }, 15000);
+
     }
 
-    // Gentle, irregular cadence so it reads as organic, not mechanical.
-    setInterval(spawn, 900);
-    for (let i = 0; i < 5; i++) setTimeout(spawn, i * 300);
   }
-})();
+
+
+  /* ==========================================================
+     4. SCRATCH HEART
+     ========================================================== */
+
+  let scratchInitialised = false;
+
+  function initialiseScratchCard() {
+
+    /*
+     * Prevent initializing canvas more than once
+     */
+    if (scratchInitialised) return;
+
+    if (!scratchCanvas) return;
+
+    scratchInitialised = true;
+
+    const container =
+      scratchCanvas.parentElement;
+
+    if (!container) return;
+
+    const rect =
+      container.getBoundingClientRect();
+
+    const width =
+      Math.max(1, Math.floor(rect.width));
+
+    const height =
+      Math.max(1, Math.floor(rect.height));
+
+    const dpr =
+      Math.min(window.devicePixelRatio || 1, 2);
+
+    /*
+     * High-resolution canvas
+     */
+    scratchCanvas.width =
+      width * dpr;
+
+    scratchCanvas.height =
+      height * dpr;
+
+    scratchCanvas.style.width =
+      width + "px";
+
+    scratchCanvas.style.height =
+      height + "px";
+
+    const ctx =
+      scratchCanvas.getContext("2d", {
+        willReadFrequently: true
+      });
+
+    /*
+     * Draw in CSS-pixel coordinates
+     */
+    ctx.setTransform(
+      dpr,
+      0,
+      0,
+      dpr,
+      0,
+      0
+    );
+
+
+    /* ========================================================
+       GOLD SCRATCH SURFACE
+       ======================================================== */
+
+    const gradient =
+      ctx.createLinearGradient(
+        0,
+        0,
+        width,
+        height
+      );
+
+    gradient.addColorStop(
+      0,
+      "#b98232"
+    );
+
+    gradient.addColorStop(
+      0.25,
+      "#e4bd6d"
+    );
+
+    gradient.addColorStop(
+      0.5,
+      "#f4d995"
+    );
+
+    gradient.addColorStop(
+      0.75,
+      "#d3a052"
+    );
+
+    gradient.addColorStop(
+      1,
+      "#a86e28"
+    );
+
+    ctx.globalCompositeOperation =
+      "source-over";
+
+    ctx.fillStyle =
+      gradient;
+
+    ctx.fillRect(
+      0,
+      0,
+      width,
+      height
+    );
+
+
+    /* ========================================================
+       GOLD TEXTURE
+       ======================================================== */
+
+    for (let i = 0; i < 700; i++) {
+
+      const x =
+        Math.random() * width;
+
+      const y =
+        Math.random() * height;
+
+      const r =
+        Math.random() * 1.8;
+
+      ctx.beginPath();
+
+      ctx.arc(
+        x,
+        y,
+        r,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.fillStyle =
+        Math.random() > .5
+          ? "rgba(255,255,255,.15)"
+          : "rgba(90,40,10,.10)";
+
+      ctx.fill();
+
+    }
+
+
+    /* ========================================================
+       SCRATCH INSTRUCTION
+       ======================================================== */
+
+    ctx.textAlign =
+      "center";
+
+    ctx.textBaseline =
+      "middle";
+
+    ctx.fillStyle =
+      "#64101b";
+
+    ctx.font =
+      '600 24px "Cormorant Garamond", serif';
+
+    ctx.fillText(
+      "SCRATCH TO REVEAL",
+      width / 2,
+      height / 2 - 12
+    );
+
+    ctx.font =
+      '18px "Poppins", sans-serif';
+
+    ctx.fillText(
+      "♡",
+      width / 2,
+      height / 2 + 25
+    );
+
+
+    /* ========================================================
+       SCRATCH INTERACTION
+       ======================================================== */
+
+    let scratching = false;
+
+    let lastX = 0;
+    let lastY = 0;
+
+    let lastCheck = 0;
+
+
+    function getPointerPosition(event) {
+
+      const bounds =
+        scratchCanvas.getBoundingClientRect();
+
+      return {
+        x:
+          event.clientX -
+          bounds.left,
+
+        y:
+          event.clientY -
+          bounds.top
+      };
+
+    }
+
+
+    function scratchAt(x, y) {
+
+      ctx.globalCompositeOperation =
+        "destination-out";
+
+      /*
+       * Large brush makes mobile scratching
+       * much easier.
+       */
+      ctx.lineWidth =
+        Math.max(42, width * .13);
+
+      ctx.lineCap =
+        "round";
+
+      ctx.lineJoin =
+        "round";
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        lastX,
+        lastY
+      );
+
+      ctx.lineTo(
+        x,
+        y
+      );
+
+      ctx.stroke();
+
+      /*
+       * Also remove a circular area at
+       * the current pointer position.
+       */
+      ctx.beginPath();
+
+      ctx.arc(
+        x,
+        y,
+        ctx.lineWidth / 2,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.fill();
+
+      lastX = x;
+      lastY = y;
+
+      /*
+       * Don't calculate thousands of pixels
+       * on every pointer movement.
+       */
+      const now =
+        Date.now();
+
+      if (now - lastCheck > 250) {
+
+        lastCheck = now;
+
+        checkScratchProgress();
+
+      }
+
+    }
+
+
+    /* ========================================================
+       POINTER DOWN
+       ======================================================== */
+
+    scratchCanvas.addEventListener(
+      "pointerdown",
+      event => {
+
+        event.preventDefault();
+
+        scratching = true;
+
+        scratchCanvas.setPointerCapture(
+          event.pointerId
+        );
+
+        const pos =
+          getPointerPosition(event);
+
+        lastX = pos.x;
+        lastY = pos.y;
+
+        scratchAt(
+          pos.x,
+          pos.y
+        );
+
+      }
+    );
+
+
+    /* ========================================================
+       POINTER MOVE
+       ======================================================== */
+
+    scratchCanvas.addEventListener(
+      "pointermove",
+      event => {
+
+        if (!scratching) return;
+
+        event.preventDefault();
+
+        const pos =
+          getPointerPosition(event);
+
+        scratchAt(
+          pos.x,
+          pos.y
+        );
+
+      }
+    );
+
+
+    /* ========================================================
+       POINTER UP
+       ======================================================== */
+
+    function stopScratching(event) {
+
+      scratching = false;
+
+      try {
+
+        if (
+          event &&
+          scratchCanvas.hasPointerCapture(
+            event.pointerId
+          )
+        ) {
+
+          scratchCanvas.releasePointerCapture(
+            event.pointerId
+          );
+
+        }
+
+      } catch (error) {
+        /* Ignore pointer release errors */
+      }
+
+      checkScratchProgress();
+
+    }
+
+
+    scratchCanvas.addEventListener(
+      "pointerup",
+      stopScratching
+    );
+
+    scratchCanvas.addEventListener(
+      "pointercancel",
+      stopScratching
+    );
+
+
+    /* ========================================================
+       CHECK SCRATCH %
+       ======================================================== */
+
+    function checkScratchProgress() {
+
+      /*
+       * Once revealed, don't keep checking.
+       */
+      if (
+        scratchCanvas.dataset.revealed === "true"
+      ) {
+        return;
+      }
+
+      /*
+       * Use a smaller sampling canvas for
+       * better performance on mobile.
+       */
+
+      const sampleSize = 80;
+
+      const tempCanvas =
+        document.createElement("canvas");
+
+      tempCanvas.width =
+        sampleSize;
+
+      tempCanvas.height =
+        sampleSize;
+
+      const tempCtx =
+        tempCanvas.getContext("2d");
+
+      tempCtx.drawImage(
+        scratchCanvas,
+        0,
+        0,
+        sampleSize,
+        sampleSize
+      );
+
+      const imageData =
+        tempCtx.getImageData(
+          0,
+          0,
+          sampleSize,
+          sampleSize
+        ).data;
+
+      let transparentPixels = 0;
+
+      const totalPixels =
+        sampleSize *
+        sampleSize;
+
+
+      for (
+        let i = 3;
+        i < imageData.length;
+        i += 4
+      ) {
+
+        if (
+          imageData[i] < 70
+        ) {
+
+          transparentPixels++;
+
+        }
+
+      }
+
+
+      const percentage =
+        transparentPixels /
+        totalPixels;
+
+
+      /*
+       * Reveal at 42%.
+       */
+      if (percentage >= .42) {
+
+        revealHeart();
+
+      }
+
+    }
+
+
+    /* ========================================================
+       REVEAL HEART
+       ======================================================== */
+
+    function revealHeart() {
+
+      if (
+        scratchCanvas.dataset.revealed === "true"
+      ) {
+        return;
+      }
+
+      scratchCanvas.dataset.revealed =
+        "true";
+
+      scratchCanvas.style.transition =
+        "opacity .8s ease";
+
+      scratchCanvas.style.opacity =
+        "0";
+
+      scratchCanvas.style.pointerEvents =
+        "none";
+
+
+      /*
+       * Reveal button
+       */
+      if (continueButton) {
+
+        setTimeout(() => {
+
+          continueButton.classList.add(
+            "visible"
+          );
+
+        }, 500);
+
+      }
+
+
+      /*
+       * Celebration petals
+       */
+      createPetals(35);
+
+
+      /*
+       * Small heart celebration
+       */
+      createHeartParticles();
+
+    }
+
+  }
+
+
+  /* ==========================================================
+     5. HEART PARTICLES
+     ========================================================== */
+
+  function createHeartParticles() {
+
+    const heart =
+      document.getElementById(
+        "scratchHeart"
+      );
+
+    if (!heart) return;
+
+    for (let i = 0; i < 18; i++) {
+
+      const particle =
+        document.createElement("span");
+
+      particle.textContent =
+        "♥";
+
+      particle.style.position =
+        "absolute";
+
+      particle.style.left =
+        "50%";
+
+      particle.style.top =
+        "50%";
+
+      particle.style.color =
+        "#8c182c";
+
+      particle.style.fontSize =
+        (10 + Math.random() * 14) + "px";
+
+      particle.style.pointerEvents =
+        "none";
+
+      particle.style.zIndex =
+        "10";
+
+      particle.style.transition =
+        "all 1.4s ease";
+
+      heart.appendChild(
+        particle
+      );
+
+
+      requestAnimationFrame(() => {
+
+        particle.style.transform =
+          `translate(
+            ${(Math.random() * 240) - 120}px,
+            ${(Math.random() * 240) - 120}px
+          ) scale(.3)`;
+
+        particle.style.opacity =
+          "0";
+
+      });
+
+
+      setTimeout(() => {
+
+        particle.remove();
+
+      }, 1500);
+
+    }
+
+  }
+
+
+  /* ==========================================================
+     6. ENTER MAIN INVITATION
+     ========================================================== */
+
+  if (continueButton) {
+
+    continueButton.addEventListener(
+      "click",
+      () => {
+
+        if (!opening) return;
+
+        /*
+         * Fade the entire opening away
+         */
+        opening.classList.add(
+          "opening-complete"
+        );
+
+        opening.style.transition =
+          "opacity 1s ease";
+
+        opening.style.opacity =
+          "0";
+
+        opening.style.pointerEvents =
+          "none";
+
+
+        /*
+         * Remove opening screen
+         */
+        setTimeout(() => {
+
+          opening.remove();
+
+          document.body.classList.add(
+            "invitation-revealed"
+          );
+
+          /*
+           * Start at top of invitation
+           */
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
+
+        }, 1000);
+
+      }
+    );
+
+  }
+
+
+  /* ==========================================================
+     7. LANGUAGE TOGGLE
+     ========================================================== */
+
+  const langToggle =
+    document.getElementById(
+      "langToggle"
+    );
+
+  if (langToggle) {
+
+    langToggle.addEventListener(
+      "click",
+      () => {
+
+        const body =
+          document.body;
+
+        const isPunjabi =
+          body.classList.contains(
+            "lang-pa"
+          );
+
+        body.classList.toggle(
+          "lang-pa",
+          !isPunjabi
+        );
+
+        body.classList.toggle(
+          "lang-en",
+          isPunjabi
+        );
+
+
+        /*
+         * Update all i18n elements
+         */
+        document
+          .querySelectorAll(".i18n")
+          .forEach(element => {
+
+            if (
+              isPunjabi
+            ) {
+
+              if (
+                element.dataset.en
+              ) {
+
+                element.textContent =
+                  element.dataset.en;
+
+              }
+
+            } else {
+
+              if (
+                element.dataset.pa
+              ) {
+
+                element.textContent =
+                  element.dataset.pa;
+
+              }
+
+            }
+
+          });
+
+      }
+    );
+
+  }
+
+
+  /* ==========================================================
+     8. MUSIC
+     ========================================================== */
+
+  const musicToggle =
+    document.getElementById(
+      "musicToggle"
+    );
+
+  const shabadAudio =
+    document.getElementById(
+      "shabadAudio"
+    );
+
+
+  if (
+    musicToggle &&
+    shabadAudio
+  ) {
+
+    musicToggle.addEventListener(
+      "click",
+      async () => {
+
+        try {
+
+          if (
+            shabadAudio.paused
+          ) {
+
+            await shabadAudio.play();
+
+            musicToggle.dataset.playing =
+              "true";
+
+            musicToggle.setAttribute(
+              "aria-pressed",
+              "true"
+            );
+
+          } else {
+
+            shabadAudio.pause();
+
+            musicToggle.dataset.playing =
+              "false";
+
+            musicToggle.setAttribute(
+              "aria-pressed",
+              "false"
+            );
+
+          }
+
+        } catch (error) {
+
+          console.log(
+            "Audio could not be played:",
+            error
+          );
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /* ==========================================================
+     9. EVENT TABS
+     ========================================================== */
+
+  const eventTabs =
+    document.querySelectorAll(
+      ".event-tab"
+    );
+
+  const eventPanels =
+    document.querySelectorAll(
+      ".event-panel"
+    );
+
+
+  eventTabs.forEach(tab => {
+
+    tab.addEventListener(
+      "click",
+      () => {
+
+        const target =
+          tab.dataset.tab;
+
+        /*
+         * Update buttons
+         */
+        eventTabs.forEach(
+          item => {
+
+            item.classList.toggle(
+              "active",
+              item === tab
+            );
+
+            item.setAttribute(
+              "aria-selected",
+              item === tab
+                ? "true"
+                : "false"
+            );
+
+          }
+        );
+
+
+        /*
+         * Update panels
+         */
+        eventPanels.forEach(
+          panel => {
+
+            const active =
+              panel.id ===
+              `panel-${target}`;
+
+            panel.classList.toggle(
+              "active",
+              active
+            );
+
+            panel.hidden =
+              !active;
+
+          }
+        );
+
+      }
+    );
+
+  });
+
+
+  /* ==========================================================
+     10. COUNTDOWN
+     ========================================================== */
+
+  const countdownGrid =
+    document.getElementById(
+      "countdownGrid"
+    );
+
+
+  if (countdownGrid) {
+
+    const target =
+      new Date(
+        countdownGrid.dataset.target
+      );
+
+
+    const daysElement =
+      document.getElementById(
+        "cdDays"
+      );
+
+    const hoursElement =
+      document.getElementById(
+        "cdHours"
+      );
+
+    const minutesElement =
+      document.getElementById(
+        "cdMinutes"
+      );
+
+    const secondsElement =
+      document.getElementById(
+        "cdSeconds"
+      );
+
+
+    function updateCountdown() {
+
+      const now =
+        new Date();
+
+      let difference =
+        target.getTime() -
+        now.getTime();
+
+
+      if (difference < 0) {
+
+        difference = 0;
+
+      }
+
+
+      const second =
+        1000;
+
+      const minute =
+        second * 60;
+
+      const hour =
+        minute * 60;
+
+      const day =
+        hour * 24;
+
+
+      const days =
+        Math.floor(
+          difference / day
+        );
+
+      const hours =
+        Math.floor(
+          (difference % day) / hour
+        );
+
+      const minutes =
+        Math.floor(
+          (difference % hour) / minute
+        );
+
+      const seconds =
+        Math.floor(
+          (difference % minute) / second
+        );
+
+
+      if (daysElement) {
+
+        daysElement.textContent =
+          String(days).padStart(
+            2,
+            "0"
+          );
+
+      }
+
+      if (hoursElement) {
+
+        hoursElement.textContent =
+          String(hours).padStart(
+            2,
+            "0"
+          );
+
+      }
+
+      if (minutesElement) {
+
+        minutesElement.textContent =
+          String(minutes).padStart(
+            2,
+            "0"
+          );
+
+      }
+
+      if (secondsElement) {
+
+        secondsElement.textContent =
+          String(seconds).padStart(
+            2,
+            "0"
+          );
+
+      }
+
+    }
+
+
+    updateCountdown();
+
+    setInterval(
+      updateCountdown,
+      1000
+    );
+
+  }
+
+
+  /* ==========================================================
+     11. MOBILE MENU
+     ========================================================== */
+
+  const navBurger =
+    document.getElementById(
+      "navBurger"
+    );
+
+  const navLinks =
+    document.getElementById(
+      "navLinks"
+    );
+
+
+  if (
+    navBurger &&
+    navLinks
+  ) {
+
+    navBurger.addEventListener(
+      "click",
+      () => {
+
+        const open =
+          navLinks.classList.toggle(
+            "is-open"
+          );
+
+        navBurger.setAttribute(
+          "aria-expanded",
+          open
+            ? "true"
+            : "false"
+        );
+
+      }
+    );
+
+
+    navLinks
+      .querySelectorAll("a")
+      .forEach(link => {
+
+        link.addEventListener(
+          "click",
+          () => {
+
+            navLinks.classList.remove(
+              "is-open"
+            );
+
+            navBurger.setAttribute(
+              "aria-expanded",
+              "false"
+            );
+
+          }
+        );
+
+      });
+
+  }
+
+
+  /* ==========================================================
+     12. CALENDAR FILE GENERATOR
+     ========================================================== */
+
+  document
+    .querySelectorAll(
+      "[data-ics]"
+    )
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const type =
+            button.dataset.ics;
+
+          let eventData;
+
+
+          if (
+            type === "shagun"
+          ) {
+
+            eventData = {
+
+              title:
+                "Danveer & Harman Preet — Shagun & Ring Ceremony",
+
+              start:
+                "20261023T183000",
+
+              end:
+                "20261023T213000",
+
+              location:
+                "Regenta Central Amritsar"
+
+            };
+
+          } else {
+
+            eventData = {
+
+              title:
+                "Danveer & Harman Preet — Anand Karaj",
+
+              start:
+                "20261025T110000",
+
+              end:
+                "20261025T140000",
+
+              location:
+                "Sandoz Amritsar"
+
+            };
+
+          }
+
+
+          const ics =
+`BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Danveer & Harman Preet//Wedding Invitation//EN
+BEGIN:VEVENT
+UID:${Date.now()}@wedding-invite
+DTSTAMP:${getICSDate(new Date())}
+DTSTART:${eventData.start}
+DTEND:${eventData.end}
+SUMMARY:${eventData.title}
+LOCATION:${eventData.location}
+END:VEVENT
+END:VCALENDAR`;
+
+
+          const blob =
+            new Blob(
+              [ics],
+              {
+                type:
+                  "text/calendar;charset=utf-8"
+              }
+            );
+
+
+          const url =
+            URL.createObjectURL(blob);
+
+          const link =
+            document.createElement(
+              "a"
+            );
+
+          link.href =
+            url;
+
+          link.download =
+            type === "shagun"
+              ? "Shagun-Ceremony.ics"
+              : "Anand-Karaj.ics";
+
+          document.body.appendChild(
+            link
+          );
+
+          link.click();
+
+          link.remove();
+
+          URL.revokeObjectURL(
+            url
+          );
+
+        }
+      );
+
+    });
+
+
+  /* ==========================================================
+     13. ICS DATE FORMAT
+     ========================================================== */
+
+  function getICSDate(date) {
+
+    return date
+      .toISOString()
+      .replace(
+        /[-:]/g,
+        ""
+      )
+      .replace(
+        /\.\d{3}/,
+        ""
+      );
+
+  }
+
+
+  /* ==========================================================
+     14. SCROLL REVEAL ANIMATIONS
+     ========================================================== */
+
+  const revealElements =
+    document.querySelectorAll(
+      ".glass-card, .section-title, .section-eyebrow"
+    );
+
+
+  if (
+    "IntersectionObserver" in window
+  ) {
+
+    const observer =
+      new IntersectionObserver(
+        entries => {
+
+          entries.forEach(
+            entry => {
+
+              if (
+                entry.isIntersecting
+              ) {
+
+                entry.target.classList.add(
+                  "revealed"
+                );
+
+                observer.unobserve(
+                  entry.target
+                );
+
+              }
+
+            }
+          );
+
+        },
+        {
+          threshold: .12
+        }
+      );
+
+
+    revealElements.forEach(
+      element => {
+
+        observer.observe(
+          element
+        );
+
+      }
+    );
+
+  }
+
+
+  /* ==========================================================
+     15. INITIAL LANGUAGE
+     ========================================================== */
+
+  if (
+    !document.body.classList.contains(
+      "lang-pa"
+    ) &&
+    !document.body.classList.contains(
+      "lang-en"
+    )
+  ) {
+
+    document.body.classList.add(
+      "lang-pa"
+    );
+
+  }
+
+});
