@@ -1,56 +1,197 @@
-const petals=document.getElementById("petals");
-function makePetal(){
-  const p=document.createElement("i"); p.className="petal";
-  p.style.left=Math.random()*100+"vw";
-  p.style.setProperty("--x",(Math.random()*240-120)+"px");
-  p.style.animationDuration=(5+Math.random()*7)+"s";
-  p.style.opacity=.35+Math.random()*.65;
-  p.style.transform=`rotate(${Math.random()*360}deg)`;
-  petals.appendChild(p);
-  setTimeout(()=>p.remove(),13000);
-}
-setInterval(makePetal,240);
-for(let i=0;i<28;i++)setTimeout(makePetal,i*80);
+// =========================================================
+// Danveer & Harman Preet — Wedding Invitation logic
+// =========================================================
 
-const opening=document.getElementById("opening");
-document.getElementById("openBtn").onclick=()=>{
-  opening.classList.add("opened");
-  setTimeout(()=>{
-    opening.classList.add("hidden");
-    document.getElementById("scratchStage").classList.remove("hidden");
-    setupScratch();
-  },1900);
-};
+document.addEventListener('DOMContentLoaded', () => {
 
-function setupScratch(){
- const c=document.getElementById("scratchCanvas"), box=c.parentElement;
- const r=box.getBoundingClientRect(), d=Math.min(devicePixelRatio||1,2);
- c.width=r.width*d;c.height=r.height*d;c.style.width=r.width+"px";c.style.height=r.height+"px";
- const x=c.getContext("2d");x.scale(d,d);
- const g=x.createLinearGradient(0,0,r.width,r.height);g.addColorStop(0,"#9a1c3b");g.addColorStop(.45,"#f0bd68");g.addColorStop(1,"#7b1730");
- x.fillStyle=g;x.fillRect(0,0,r.width,r.height);
- x.fillStyle="#fff0d8";x.font="italic 25px Georgia";x.textAlign="center";x.fillText("SCRATCH TO REVEAL",r.width/2,r.height/2);
- let down=false,last=null;
- const pos=e=>{const q=c.getBoundingClientRect();return{x:e.clientX-q.left,y:e.clientY-q.top}};
- const scratch=e=>{if(!down)return;const q=pos(e);x.globalCompositeOperation="destination-out";x.lineWidth=45;x.lineCap="round";x.beginPath();if(last)x.moveTo(last.x,last.y);else x.moveTo(q.x,q.y);x.lineTo(q.x,q.y);x.stroke();last=q;};
- c.onpointerdown=e=>{down=true;last=pos(e);c.setPointerCapture(e.pointerId);scratch(e)};
- c.onpointermove=scratch;c.onpointerup=()=>{down=false;last=null;check()};
- function check(){const a=x.getImageData(0,0,c.width/d,c.height/d).data;let z=0;for(let i=3;i<a.length;i+=4)if(a[i]<50)z++;if(z/(a.length/4)>.42){c.style.opacity=0;document.getElementById("enterBtn").classList.remove("hidden")}}
-}
-document.getElementById("enterBtn").onclick=()=>{
- document.getElementById("scratchStage").classList.add("hidden");
- document.getElementById("site").classList.remove("hidden");
- window.scrollTo(0,0);
-};
+  /* ---------- SCREEN NAVIGATION ---------- */
+  const screens = Array.from(document.querySelectorAll('.screen'));
+  const dotsWrap = document.getElementById('dots');
+  let current = 0;
 
-document.querySelectorAll("[data-scroll]").forEach(b=>b.onclick=()=>document.querySelector(b.dataset.scroll).scrollIntoView({behavior:"smooth"}));
+  screens.forEach((s, i) => {
+    const dot = document.createElement('span');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dotsWrap.appendChild(dot);
+  });
+  const dots = Array.from(dotsWrap.children);
 
-const target=new Date("2026-10-25T11:00:00+05:30");
-function tick(){
- let n=Math.max(0,target-Date.now());
- let s=Math.floor(n/1000),d=Math.floor(s/86400);s%=86400;
- let h=Math.floor(s/3600);s%=3600;let m=Math.floor(s/60);s%=60;
- days.textContent=String(d).padStart(2,"0");hours.textContent=String(h).padStart(2,"0");
- minutes.textContent=String(m).padStart(2,"0");seconds.textContent=String(s).padStart(2,"0");
-}
-tick();setInterval(tick,1000);
+  function goTo(index){
+    if(index < 0 || index >= screens.length) return;
+    screens[current].classList.remove('active');
+    screens[current].classList.add('prev');
+    current = index;
+    screens[current].classList.remove('prev');
+    screens[current].classList.add('active');
+    dots.forEach((d,i) => d.classList.toggle('active', i === current));
+  }
+
+  function next(){ goTo(current + 1); }
+
+  // wire up every element with data-next
+  document.querySelectorAll('[data-next]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      next();
+    });
+  });
+
+  // basic swipe support (mobile)
+  let touchStartX = 0;
+  document.getElementById('deck').addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, {passive:true});
+  document.getElementById('deck').addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].screenX - touchStartX;
+    if(Math.abs(dx) > 60){
+      if(dx < 0) goTo(current + 1);
+      else goTo(current - 1);
+    }
+  }, {passive:true});
+
+  /* ---------- DOORS SCREEN ---------- */
+  const doorsScreen = document.querySelector('.doors');
+  const doorWrap = document.getElementById('doorWrap');
+  let doorsOpened = false;
+  doorsScreen.addEventListener('click', () => {
+    if(!doorsOpened){
+      doorWrap.classList.add('open');
+      doorsOpened = true;
+      setTimeout(next, 900);
+    }
+  });
+
+  /* ---------- SCRATCH CARD ---------- */
+  const canvas = document.getElementById('scratchCanvas');
+  const ctx = canvas.getContext('2d');
+  const scratchHint = document.getElementById('scratchHint');
+  const scratchNextBtn = document.getElementById('scratchNextBtn');
+
+  function paintScratchLayer(){
+    const w = canvas.width, h = canvas.height;
+    const grad = ctx.createLinearGradient(0,0,w,h);
+    grad.addColorStop(0, '#f2d98a');
+    grad.addColorStop(1, '#b8860b');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0,0,w,h);
+    ctx.fillStyle = 'rgba(255,255,255,.25)';
+    ctx.font = '14px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('SCRATCH HERE', w/2, h/2);
+  }
+  paintScratchLayer();
+
+  let isScratching = false;
+  let scratchedPct = 0;
+
+  function getPos(e){
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const point = e.touches ? e.touches[0] : e;
+    return { x: (point.clientX - rect.left) * scaleX, y: (point.clientY - rect.top) * scaleY };
+  }
+
+  function scratchAt(x,y){
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath();
+    ctx.arc(x, y, 22, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function checkProgress(){
+    const data = ctx.getImageData(0,0,canvas.width,canvas.height).data;
+    let cleared = 0;
+    for(let i = 3; i < data.length; i += 4 * 20){ // sample every 20th pixel for speed
+      if(data[i] === 0) cleared++;
+    }
+    scratchedPct = cleared / (data.length / (4*20));
+    if(scratchedPct > 0.55 && scratchNextBtn.style.opacity !== '1'){
+      scratchNextBtn.style.transition = 'opacity .6s';
+      scratchNextBtn.style.opacity = '1';
+      scratchNextBtn.style.pointerEvents = 'auto';
+      scratchHint.textContent = 'tap the arrow to continue';
+      // auto-clear the rest for a satisfying reveal
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+    }
+  }
+
+  function startScratch(e){ isScratching = true; scratchMove(e); }
+  function endScratch(){ isScratching = false; checkProgress(); }
+  function scratchMove(e){
+    if(!isScratching) return;
+    e.preventDefault();
+    const {x,y} = getPos(e);
+    scratchAt(x,y);
+    checkProgress();
+  }
+
+  canvas.addEventListener('mousedown', startScratch);
+  canvas.addEventListener('mousemove', scratchMove);
+  window.addEventListener('mouseup', endScratch);
+  canvas.addEventListener('touchstart', startScratch, {passive:false});
+  canvas.addEventListener('touchmove', scratchMove, {passive:false});
+  canvas.addEventListener('touchend', endScratch);
+
+  /* ---------- COUNTDOWN ---------- */
+  const target = new Date('2026-10-23T06:30:00+05:30').getTime();
+  function tickCountdown(){
+    const now = Date.now();
+    let diff = Math.max(0, target - now);
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    const set = (id,val) => { const el = document.getElementById(id); if(el) el.textContent = String(val).padStart(2,'0'); };
+    set('cd-days', d); set('cd-hours', h); set('cd-mins', m); set('cd-secs', s);
+  }
+  tickCountdown();
+  setInterval(tickCountdown, 1000);
+
+  /* ---------- RESTART ---------- */
+  const restartBtn = document.getElementById('restartBtn');
+  if(restartBtn){
+    restartBtn.addEventListener('click', () => goTo(0));
+  }
+
+  /* ---------- MUSIC TOGGLE ---------- */
+  // Add your own track: create an <audio id="bgm" src="images/song.mp3" loop></audio> in index.html
+  let audioEl = document.getElementById('bgm');
+  let playing = false;
+  document.querySelectorAll('.music-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if(!audioEl){
+        console.warn('No audio element found. Add <audio id="bgm" src="your-song.mp3" loop></audio> to index.html to enable music.');
+        document.querySelectorAll('.music-btn').forEach(b => b.classList.toggle('muted'));
+        return;
+      }
+      if(playing){ audioEl.pause(); } else { audioEl.play().catch(()=>{}); }
+      playing = !playing;
+      document.querySelectorAll('.music-btn').forEach(b => b.classList.toggle('muted', !playing));
+    });
+  });
+
+  /* ---------- FALLING PETALS (whole page, every screen) ---------- */
+  const petalLayer = document.getElementById('petals');
+  const petalGlyphs = ['❀','✿','❁','⚘'];
+  const petalCount = window.innerWidth < 500 ? 18 : 28;
+
+  for(let i = 0; i < petalCount; i++){
+    const p = document.createElement('span');
+    p.className = 'petal';
+    p.textContent = petalGlyphs[Math.floor(Math.random()*petalGlyphs.length)];
+    const left = Math.random() * 100;
+    const fallDuration = 8 + Math.random() * 10;
+    const swayDuration = 3 + Math.random() * 3;
+    const delay = Math.random() * -20;
+    const size = 12 + Math.random() * 14;
+    p.style.left = left + 'vw';
+    p.style.fontSize = size + 'px';
+    p.style.animationDuration = `${fallDuration}s, ${swayDuration}s`;
+    p.style.animationDelay = `${delay}s, ${delay}s`;
+    p.style.color = Math.random() > 0.5 ? '#f2a6b5' : '#d4af37';
+    petalLayer.appendChild(p);
+  }
+
+});
