@@ -1,166 +1,243 @@
-<!-- ============================================================
-     CINEMATIC WEDDING OPENING
-     ============================================================ -->
-<section class="wedding-opening" id="weddingOpening">
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#5a1020">
+<meta name="description" content="Danveer Singh & Harman Preet Kaur — Wedding Invitation, 23–25 October 2026, Amritsar.">
+<title>Danveer & Harman Preet | Wedding Invitation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Marcellus&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-  <!-- Ambient background -->
-  <div class="opening-bg"></div>
+<!-- Global falling petals: stays active across the entire website -->
+<div class="petals-layer" id="petalsLayer" aria-hidden="true"></div>
 
-  <!-- Floating petals -->
-  <div class="opening-petals" id="openingPetals"></div>
+<!-- ========================= OPENING ========================= -->
+<div class="wedding-opening" id="weddingOpening">
+  <div class="opening-glow"></div>
+  <div class="opening-stars"></div>
+  <div class="opening-floral-ring"></div>
 
-  <!-- Top branding -->
   <div class="opening-brand">
-    <div class="opening-khanda">ੴ</div>
-
-    <div class="monogram">
-      D <span>♡</span> H
-    </div>
-
-    <div class="opening-subtitle">
-      OUR FOREVER BEGINS...
-    </div>
+    <div class="khanda">ੴ</div>
+    <div class="monogram">D <span>♡</span> H</div>
+    <div class="caption">OUR FOREVER BEGINS</div>
   </div>
 
-  <!-- ========================================================
-       COUPLE
-       ======================================================== -->
-  <div class="animated-couple">
-
-    <div class="couple-glow"></div>
-
-    <div class="groom-character">
-      <img
-        src="assets/groom-wedding.png"
-        alt="Danveer Singh"
-      >
-    </div>
-
-    <div class="bride-character">
-      <img
-        src="assets/bride-wedding.png"
-        alt="Harman Preet Kaur"
-      >
-    </div>
-
+  <!-- Premium vector/cartoon couple — no photograph used -->
+  <div class="cartoon-couple" aria-hidden="true">
+    <svg viewBox="0 0 700 720" role="img" aria-label="Illustrated bride and groom">
+      <defs>
+        <linearGradient id="sherwani" x1="0" x2="1">
+          <stop offset="0" stop-color="#fff3d5"/><stop offset=".5" stop-color="#e7c88f"/><stop offset="1" stop-color="#fff6df"/>
+        </linearGradient>
+        <linearGradient id="lehenga" x1="0" x2="1">
+          <stop offset="0" stop-color="#6f1025"/><stop offset=".45" stop-color="#a72d4c"/><stop offset="1" stop-color="#5a0d20"/>
+        </linearGradient>
+        <linearGradient id="turban" x1="0" x2="1">
+          <stop offset="0" stop-color="#7a1127"/><stop offset=".55" stop-color="#b73855"/><stop offset="1" stop-color="#650d21"/>
+        </linearGradient>
+        <filter id="softShadow"><feGaussianBlur stdDeviation="8"/></filter>
+      </defs>
+      <ellipse cx="350" cy="682" rx="245" ry="28" fill="#2b0610" opacity=".28" filter="url(#softShadow)"/>
+      <!-- Bride -->
+      <g class="bride-dance">
+        <path d="M190 680 Q205 490 275 430 L350 445 Q410 510 430 680Z" fill="url(#lehenga)" stroke="#e9c56f" stroke-width="5"/>
+        <path d="M210 610 Q310 650 415 610" fill="none" stroke="#e8bd63" stroke-width="7" opacity=".8"/>
+        <path d="M220 530 Q310 575 400 530" fill="none" stroke="#e8bd63" stroke-width="6" opacity=".7"/>
+        <path d="M275 430 Q315 402 354 432 L405 505 Q335 535 260 498Z" fill="#f2d9b0" stroke="#b58a48" stroke-width="3"/>
+        <circle cx="318" cy="330" r="70" fill="#b86d50"/>
+        <path d="M250 330 Q245 255 322 245 Q388 255 387 335 Q363 296 320 301 Q281 303 250 330Z" fill="#24161a"/>
+        <path d="M258 280 Q320 220 384 286 L378 330 Q344 292 310 294 Q280 297 258 320Z" fill="#7d1730" stroke="#e8c36e" stroke-width="5"/>
+        <path d="M264 335 Q286 352 310 351" fill="none" stroke="#3b1b1c" stroke-width="5" stroke-linecap="round"/>
+        <path d="M330 351 Q354 352 376 333" fill="none" stroke="#3b1b1c" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="289" cy="330" r="4" fill="#28151a"/><circle cx="353" cy="330" r="4" fill="#28151a"/>
+        <path d="M308 373 Q320 381 333 372" fill="none" stroke="#8c2636" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="319" cy="289" r="9" fill="#efc96f"/><path d="M319 295v36" stroke="#efc96f" stroke-width="3"/>
+        <path d="M265 400 Q315 420 370 397" fill="none" stroke="#efc96f" stroke-width="8"/>
+        <path d="M261 424 Q205 450 208 522" fill="none" stroke="#b86d50" stroke-width="25" stroke-linecap="round"/>
+        <path d="M373 420 Q430 445 446 505" fill="none" stroke="#b86d50" stroke-width="25" stroke-linecap="round"/>
+        <circle cx="208" cy="522" r="12" fill="#b86d50"/><circle cx="446" cy="505" r="12" fill="#b86d50"/>
+        <g fill="none" stroke="#efc96f" stroke-width="5"><circle cx="205" cy="534" r="15"/><circle cx="446" cy="518" r="15"/></g>
+      </g>
+      <!-- Groom -->
+      <g class="groom-dance">
+        <path d="M330 680 Q340 475 395 415 Q455 385 515 420 Q565 485 585 680Z" fill="url(#sherwani)" stroke="#c59b55" stroke-width="4"/>
+        <path d="M450 432 L450 660" stroke="#b88a43" stroke-width="4" opacity=".65"/>
+        <path d="M427 448 L450 475 L473 448" fill="none" stroke="#b88a43" stroke-width="4"/>
+        <circle cx="450" cy="325" r="73" fill="#9d5d43"/>
+        <path d="M382 320 Q375 245 450 225 Q530 240 523 320 Q490 283 451 292 Q415 286 382 320Z" fill="#1d1517"/>
+        <path d="M382 282 Q430 205 520 258 L520 319 Q485 280 451 292 Q413 285 382 316Z" fill="url(#turban)" stroke="#e5bd65" stroke-width="5"/>
+        <path d="M455 224 Q470 242 472 288" fill="none" stroke="#e9c16a" stroke-width="5"/>
+        <circle cx="452" cy="271" r="10" fill="#f0cb6c"/>
+        <circle cx="420" cy="323" r="4" fill="#241619"/><circle cx="482" cy="323" r="4" fill="#241619"/>
+        <path d="M430 363 Q451 375 474 361" fill="none" stroke="#32171a" stroke-width="5" stroke-linecap="round"/>
+        <path d="M412 388 Q450 410 493 388" fill="none" stroke="#231518" stroke-width="20" stroke-linecap="round"/>
+        <path d="M397 425 Q350 455 344 520" fill="none" stroke="#9d5d43" stroke-width="26" stroke-linecap="round"/>
+        <path d="M505 425 Q560 454 568 520" fill="none" stroke="#9d5d43" stroke-width="26" stroke-linecap="round"/>
+        <path d="M344 520 Q375 525 401 493" fill="none" stroke="#9d5d43" stroke-width="24" stroke-linecap="round"/>
+        <path d="M568 520 Q540 524 513 495" fill="none" stroke="#9d5d43" stroke-width="24" stroke-linecap="round"/>
+        <path d="M449 450 L470 510 L449 565 L428 510Z" fill="#7b152a" opacity=".9"/>
+      </g>
+      <g class="sparkles" fill="#f2cc78"><circle cx="125" cy="220" r="5"/><circle cx="590" cy="250" r="4"/><circle cx="105" cy="420" r="3"/><circle cx="610" cy="450" r="5"/></g>
+    </svg>
   </div>
 
-
-  <!-- ========================================================
-       OPENING GATES
-       ======================================================== -->
+  <!-- Ornate doors -->
   <div class="gate gate-left">
-    <div class="gate-inner">
-      <div class="gate-khanda">☬</div>
-      <div class="gate-floral">❧</div>
-    </div>
+    <div class="gate-inner"><span>ੴ</span><i></i><b></b><i></i><span>ੴ</span></div>
   </div>
-
   <div class="gate gate-right">
-    <div class="gate-inner">
-      <div class="gate-khanda">☬</div>
-      <div class="gate-floral">❧</div>
-    </div>
+    <div class="gate-inner"><span>ੴ</span><i></i><b></b><i></i><span>ੴ</span></div>
   </div>
 
-
-  <!-- ========================================================
-       OPEN BUTTON
-       ======================================================== -->
-  <button
-    class="open-wedding"
-    id="openInvitation"
-    type="button"
-  >
-
-    <span class="open-wedding-small">
-      YOU ARE INVITED
-    </span>
-
-    <span class="open-wedding-main">
-      Tap to Open
-    </span>
-
-    <span class="open-hand">☝</span>
-
-    <span class="open-shimmer"></span>
-
+  <button class="opening-door-button" id="openInvitation" type="button">
+    <small>YOU ARE INVITED</small>
+    <strong>Tap to Open</strong>
+    <span class="tap-icon">⌄</span>
   </button>
 
-
-  <!-- ========================================================
-       SCRATCH REVEAL
-       ======================================================== -->
+  <!-- Scratch reveal -->
   <div class="scratch-screen" id="scratchScreen">
-
-    <div class="scratch-content">
-
-      <p class="scratch-kicker">
-        A SPECIAL DATE
-      </p>
-
-      <h2>
-        Scratch the Heart
-      </h2>
-
-      <p class="scratch-instruction">
-        ✦ Reveal the day our forever begins ✦
-      </p>
-
-
-      <div
-        class="scratch-heart"
-        id="scratchHeart"
-      >
-
-        <!-- Revealed information -->
-        <div class="heart-reveal">
-
-          <span class="heart-date">
-            23 – 25
-          </span>
-
-          <span class="heart-month">
-            OCTOBER
-          </span>
-
-          <span class="heart-year">
-            2026
-          </span>
-
-          <span class="heart-city">
-            AMRITSAR
-          </span>
-
+    <div class="scratch-card">
+      <div class="scratch-eyebrow">A SPECIAL DATE</div>
+      <h2>Scratch the Heart</h2>
+      <p>Rub the heart with your finger to reveal the dates.</p>
+      <div class="scratch-heart" id="scratchHeart">
+        <div class="heart-shape">
+          <div class="heart-content">
+            <strong>23 – 25</strong>
+            <span>OCTOBER</span>
+            <b>2026</b>
+            <small>AMRITSAR</small>
+          </div>
         </div>
-
-        <!-- Scratch surface -->
-        <canvas
-          id="scratchCanvas"
-        ></canvas>
-
+        <canvas id="scratchCanvas"></canvas>
       </div>
-
-
-      <div class="scratch-names">
-        Danveer <span>&amp;</span> Harman Preet
-      </div>
-
-      <div class="scratch-tagline">
-        A JOURNEY OF TWO SOULS, ONE DESTINY
-      </div>
-
-      <button
-        class="continue-button"
-        id="continueInvitation"
-        type="button"
-      >
-        Enter Our Wedding
-        <span>→</span>
-      </button>
-
+      <div class="scratch-names">Danveer <span>&amp;</span> Harman Preet</div>
+      <div class="scratch-tagline">A JOURNEY OF TWO SOULS · ONE DESTINY</div>
+      <button class="continue-button" id="continueInvitation" type="button">Enter Our Wedding →</button>
     </div>
-
   </div>
+</div>
 
+<!-- ========================= NAV ========================= -->
+<header class="site-nav" id="siteNav">
+  <a class="nav-brand" href="#home">D <em>♡</em> H</a>
+  <nav id="navLinks">
+    <a href="#home">Home</a>
+    <a href="#countdown">Countdown</a>
+    <a href="#events">Events</a>
+    <a href="#family">Family</a>
+    <a href="#save">Save the Dates</a>
+  </nav>
+  <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</header>
+
+<main>
+<!-- ========================= HERO ========================= -->
+<section class="hero" id="home">
+  <div class="hero-ornament"></div>
+  <div class="hero-content">
+    <div class="khanda-large">ੴ</div>
+    <p class="blessing">With the blessings of Waheguru</p>
+    <div class="rule"><i></i><span>♡</span><i></i></div>
+    <h1><span>Danveer Singh</span><em>&amp;</em><span>Harman Preet Kaur</span></h1>
+    <p class="hero-copy">We invite you to celebrate the beginning of our forever.</p>
+    <div class="hero-date">23–25 OCTOBER 2026 · AMRITSAR</div>
+    <a class="hero-button" href="#events">Explore Our Celebration</a>
+  </div>
 </section>
+
+<!-- ========================= COUNTDOWN ========================= -->
+<section class="countdown-section" id="countdown">
+  <div class="section-kicker">UNTIL OUR ANAND KARAJ</div>
+  <h2>Counting Down to Forever</h2>
+  <div class="countdown-grid" id="countdownGrid" data-target="2026-10-25T11:00:00+05:30">
+    <div><strong id="cdDays">00</strong><span>Days</span></div>
+    <div><strong id="cdHours">00</strong><span>Hours</span></div>
+    <div><strong id="cdMinutes">00</strong><span>Minutes</span></div>
+    <div><strong id="cdSeconds">00</strong><span>Seconds</span></div>
+  </div>
+</section>
+
+<!-- ========================= EVENTS ========================= -->
+<section class="events-section" id="events">
+  <div class="section-kicker">THE CELEBRATIONS</div>
+  <h2>Our Wedding Events</h2>
+  <div class="event-tabs" role="tablist">
+    <button class="event-tab active" data-tab="shagun" role="tab" aria-selected="true">01 · Shagun &amp; Ring Ceremony</button>
+    <button class="event-tab" data-tab="anand" role="tab" aria-selected="false">02 · Anand Karaj</button>
+  </div>
+  <div class="event-panel active" id="panel-shagun">
+    <article class="event-card">
+      <div class="event-number">23 OCT</div>
+      <h3>Shagun &amp; Ring Ceremony</h3>
+      <div class="event-meta">
+        <div><small>DATE</small><strong>23 October 2026</strong></div>
+        <div><small>TIME</small><strong>6:30 PM onwards</strong></div>
+        <div><small>VENUE</small><strong>Regenta Central Amritsar</strong></div>
+      </div>
+      <div class="schedule"><h4>Schedule</h4><p><b>6:30 PM</b> Welcome &amp; High Tea</p><p><b>7:00 PM</b> Shagun Ceremony</p><p><b>7:45 PM</b> Ring Ceremony</p><p><b>8:30 PM</b> Dinner</p></div>
+      <div class="actions"><a href="https://share.google/AUOrQXmSviukgWEPi" target="_blank" rel="noopener">Navigate</a><button data-ics="shagun">Add to Calendar</button></div>
+    </article>
+  </div>
+  <div class="event-panel" id="panel-anand" hidden>
+    <article class="event-card">
+      <div class="event-number">25 OCT</div>
+      <h3>Anand Karaj</h3>
+      <div class="event-meta">
+        <div><small>DATE</small><strong>25 October 2026</strong></div>
+        <div><small>TIME</small><strong>11:00 AM</strong></div>
+        <div><small>VENUE</small><strong>Sandoz Amritsar</strong></div>
+        <div><small>LUNCH</small><strong>2:00 PM</strong></div>
+      </div>
+      <div class="schedule"><h4>Schedule</h4><p><b>11:00 AM</b> Anand Karaj</p><p><b>2:00 PM</b> Lunch</p></div>
+      <div class="actions"><a href="https://share.google/m8ugybEKos8E6Q6jq" target="_blank" rel="noopener">Navigate</a><button data-ics="anand">Add to Calendar</button></div>
+    </article>
+  </div>
+</section>
+
+<!-- ========================= FAMILY ========================= -->
+<section class="family-section" id="family">
+  <div class="section-kicker">WITH LOVE &amp; BLESSINGS</div>
+  <h2>Our Families</h2>
+  <div class="family-grid">
+    <article><small>GROOM'S FAMILY</small><h3>Danveer Singh</h3><p><b>Father</b> Harvinder Singh</p><p><b>Mother</b> Vivek Kaur</p></article>
+    <div class="family-heart">♡</div>
+    <article><small>BRIDE'S FAMILY</small><h3>Harman Preet Kaur</h3><p><b>Father</b> Mandeep Singh</p><p><b>Mother</b> Parminder Kaur</p><p><b>Grandmother</b> Manjeet Kaur</p></article>
+  </div>
+</section>
+
+<!-- ========================= QUOTE ========================= -->
+<section class="quote-section">
+  <div class="quote-mark">ੴ</div>
+  <blockquote>“Two souls, one divine light, united with the blessings of Waheguru.”</blockquote>
+  <div class="quote-rule">— D ♡ H —</div>
+</section>
+
+<!-- ========================= SAVE DATES ========================= -->
+<section class="save-section" id="save">
+  <div class="section-kicker">MAKE IT OFFICIAL</div>
+  <h2>Save the Dates</h2>
+  <div class="save-grid">
+    <button data-ics="shagun"><span>23</span><b>OCTOBER 2026</b><small>Shagun &amp; Ring Ceremony</small></button>
+    <button data-ics="anand"><span>25</span><b>OCTOBER 2026</b><small>Anand Karaj</small></button>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="footer-khanda">ੴ</div>
+  <p>We look forward to celebrating with you.</p>
+  <strong>Danveer Singh <em>&amp;</em> Harman Preet Kaur</strong>
+  <small>25.10.2026 · Amritsar</small>
+</footer>
+
+<script src="script.js" defer></script>
+</body>
+</html>
