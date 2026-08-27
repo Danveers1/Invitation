@@ -1,842 +1,954 @@
-/* ================================================================
-   DANVEER & HARMAN PREET — WEDDING INVITATION
-   Royal Sikh Traditional theme
-   Ivory + Deep Maroon + Antique Gold
-   ================================================================ */
+/* ============================================================
+   CINEMATIC WEDDING OPENING
+   ============================================================ */
 
-/* ---------------------------------------------------------------
-   1. DESIGN TOKENS
-   --------------------------------------------------------------- */
-:root{
-  /* Core palette */
-  --ivory:        #FBF6EC;
-  --ivory-deep:   #F3E7CE;
-  --paper:        #FFFDF8;
-  --maroon:       #6B0F1A;
-  --maroon-dark:  #3E0710;
-  --maroon-glow:  #8C1B27;
-  --gold:         #C9A24B;
-  --gold-light:   #E9D6A0;
-  --gold-deep:    #8C6A24;
-  --ink:          #2B1810;
-  --ink-soft:     #5A4535;
-
-  /* Glass surfaces */
-  --glass-bg:     rgba(255, 253, 248, 0.62);
-  --glass-border: rgba(201, 162, 75, 0.55);
-  --glass-shadow: 0 20px 60px -20px rgba(59, 10, 18, 0.35);
-
-  /* Typography */
-  --font-display-en:  'Cormorant Garamond', 'Georgia', serif;
-  --font-accent-en:   'Marcellus', serif;
-  --font-body-en:     'Poppins', sans-serif;
-  --font-display-pa:  'Noto Serif Gurmukhi', serif;
-  --font-body-pa:     'Noto Sans Gurmukhi', sans-serif;
-
-  /* Rhythm */
-  --section-pad: clamp(4rem, 9vw, 7rem);
-  --radius-lg: 28px;
-  --radius-md: 18px;
-  --radius-sm: 10px;
-
-  /* Motion */
-  --ease-royal: cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-/* ---------------------------------------------------------------
-   2. RESET
-   --------------------------------------------------------------- */
-*, *::before, *::after{ box-sizing: border-box; }
-html{ scroll-behavior: smooth; }
-body{
-  margin: 0;
-  background: var(--ivory);
-  color: var(--ink);
-  font-family: var(--font-body-en);
-  font-weight: 300;
-  overflow-x: hidden;
-  background-image:
-    radial-gradient(circle at 12% 8%, rgba(201,162,75,0.07), transparent 40%),
-    radial-gradient(circle at 88% 92%, rgba(107,15,26,0.05), transparent 45%);
-}
-img{ max-width: 100%; display: block; }
-ul{ list-style: none; margin: 0; padding: 0; }
-a{ color: inherit; text-decoration: none; }
-button{ font: inherit; cursor: pointer; }
-svg{ display: block; }
-
-@media (prefers-reduced-motion: reduce){
-  *, *::before, *::after{
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* Bilingual toggle rule ----------------------------------------
-   Default (body.lang-pa): Punjabi is the primary display, English
-   is the smaller companion line. Toggling adds .lang-en which
-   flips the emphasis. Both languages always remain in the DOM so
-   every heading/detail is available in both languages at once. */
-.pa, .pa-script{ font-family: var(--font-display-pa); }
-.en{ font-family: var(--font-display-en); font-style: italic; }
-
-body.lang-pa .pa{ font-size: 1em; opacity: 1; order: 1; }
-body.lang-pa .en{ font-size: 0.62em; opacity: 0.72; order: 2; letter-spacing: 0.02em; }
-body.lang-en .pa{ font-size: 0.62em; opacity: 0.72; order: 2; }
-body.lang-en .en{ font-size: 1em; opacity: 1; order: 1; font-style: normal; }
-
-.section-title{ display: flex; flex-direction: column; gap: 0.15em; }
-.event-card-head h3{ display:flex; flex-direction:column; gap:0.1em; }
-.parents-list li{ display:flex; flex-direction:column; }
-
-/* Elements marked .i18n swap their textContent via JS instead of
-   showing both — used for compact UI chrome (nav, labels, buttons) */
-
-/* ---------------------------------------------------------------
-   3. FLOATING PETALS
-   --------------------------------------------------------------- */
-.petals-layer{
+.wedding-opening {
   position: fixed;
   inset: 0;
-  pointer-events: none;
-  z-index: 40;
+  z-index: 9999;
   overflow: hidden;
-}
-.petal{
-  position: absolute;
-  top: -5%;
-  width: 14px;
-  height: 10px;
-  background: linear-gradient(135deg, var(--maroon-glow), var(--gold));
-  border-radius: 0 100% 0 100%;
-  opacity: 0.75;
-  animation: petal-fall linear forwards;
-  will-change: transform, opacity;
-}
-@keyframes petal-fall{
-  0%   { transform: translate3d(0,0,0) rotate(0deg); opacity: 0; }
-  8%   { opacity: 0.8; }
-  100% { transform: translate3d(var(--drift, 40px), 110vh, 0) rotate(400deg); opacity: 0; }
-}
-
-/* ---------------------------------------------------------------
-   4. NAVIGATION
-   --------------------------------------------------------------- */
-.site-nav{
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.8rem clamp(1rem, 4vw, 3rem);
-  background: rgba(251, 246, 236, 0.72);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  border-bottom: 1px solid var(--glass-border);
-  transition: padding 0.3s var(--ease-royal);
-}
-.nav-brand{
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.brand-khanda{ width: 26px; height: 26px; fill: var(--maroon); }
-.brand-text{
-  font-family: var(--font-accent-en);
-  font-size: 1.1rem;
-  letter-spacing: 0.08em;
-  color: var(--maroon);
-}
-.brand-text em{ font-style: normal; color: var(--gold-deep); }
-
-.nav-links{
-  display: flex;
-  gap: clamp(1rem, 2.4vw, 2.2rem);
-}
-.nav-links a{
-  font-family: var(--font-body-pa), var(--font-body-en);
-  font-size: 0.9rem;
-  letter-spacing: 0.02em;
-  color: var(--ink-soft);
-  position: relative;
-  padding-bottom: 2px;
-}
-.nav-links a::after{
-  content: "";
-  position: absolute; left: 0; bottom: 0;
-  width: 0; height: 1px;
-  background: var(--gold-deep);
-  transition: width 0.3s var(--ease-royal);
-}
-.nav-links a:hover::after{ width: 100%; }
-
-.nav-controls{ display: flex; align-items: center; gap: 0.7rem; }
-
-.lang-toggle{
-  display: flex;
-  border: 1px solid var(--gold);
-  border-radius: 999px;
-  overflow: hidden;
-  background: var(--paper);
-}
-.lang-pill{
-  padding: 0.35rem 0.8rem;
-  font-size: 0.78rem;
-  font-family: var(--font-accent-en);
-  color: var(--ink-soft);
-  transition: background 0.25s, color 0.25s;
-}
-body.lang-pa .lang-pill[data-lang-btn="pa"],
-body.lang-en .lang-pill[data-lang-btn="en"]{
-  background: var(--maroon);
-  color: var(--ivory);
-}
-
-.music-toggle, .nav-burger{
-  width: 38px; height: 38px;
-  border-radius: 50%;
-  border: 1px solid var(--gold);
-  background: var(--paper);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--maroon);
-}
-.icon-note, .icon-mute{ width: 18px; height: 18px; }
-.music-toggle[aria-pressed="true"] .icon-note{ display: none; }
-.music-toggle[aria-pressed="true"] .icon-mute{ display: block !important; }
-.music-toggle[aria-pressed="true"]{ animation: pulse-gold 2.4s ease-in-out infinite; }
-@keyframes pulse-gold{
-  0%,100%{ box-shadow: 0 0 0 0 rgba(201,162,75,0.5); }
-  50%{ box-shadow: 0 0 0 6px rgba(201,162,75,0); }
-}
-
-.nav-burger{ display: none; flex-direction: column; gap: 4px; padding: 10px; }
-.nav-burger span{ width: 16px; height: 1.5px; background: var(--maroon); }
-
-@media (max-width: 880px){
-  .nav-links{
-    position: fixed;
-    top: 62px; right: 0;
-    flex-direction: column;
-    background: var(--paper);
-    border-left: 1px solid var(--glass-border);
-    border-bottom: 1px solid var(--glass-border);
-    padding: 1.2rem 1.6rem;
-    border-radius: 0 0 0 var(--radius-md);
-    transform: translateX(110%);
-    transition: transform 0.4s var(--ease-royal);
-  }
-  .nav-links.open{ transform: translateX(0); }
-  .nav-burger{ display: flex; }
-}
-
-/* ---------------------------------------------------------------
-   5. HERO
-   --------------------------------------------------------------- */
-.hero{
-  position: relative;
-  min-height: 100svh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-.hero-media{ position: absolute; inset: 0; z-index: 0; }
-
-/* Ornamental placeholder — swap for a real photo via
-   .hero-photo-placeholder{ background:url('assets/couple-hero.jpg') center/cover; } */
-.hero-photo-placeholder{
-  position: absolute; inset: 0;
   background:
-    radial-gradient(circle at 50% 32%, rgba(233,214,160,0.22), transparent 55%),
-    linear-gradient(160deg, var(--maroon-dark) 0%, var(--maroon) 45%, var(--maroon-glow) 100%);
-  display: flex; align-items: center; justify-content: center;
-}
-.hero-photo-placeholder::before{
-  content: "";
-  position: absolute; inset: 6%;
-  border: 1px solid rgba(233,214,160,0.4);
-  border-radius: 2px;
-}
-.hero-mono{
-  font-family: var(--font-display-en);
-  font-size: clamp(4rem, 16vw, 11rem);
-  color: rgba(233,214,160,0.16);
-  letter-spacing: 0.05em;
-}
-.hero-mono em{ font-style: normal; padding: 0 0.15em; }
-
-.hero-overlay{
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(28,4,8,0.55) 0%, rgba(28,4,8,0.35) 35%, rgba(28,4,8,0.75) 100%);
-}
-.hero-arch{
-  position: absolute; left: 0; right: 0; bottom: -1px; height: 14vh; min-height: 90px;
-  background: var(--ivory);
-  clip-path: polygon(0 100%, 0 55%, 5% 30%, 12% 15%, 20% 5%, 30% 0%, 40% -3%, 50% -4%, 60% -3%, 70% 0%, 80% 5%, 88% 15%, 95% 30%, 100% 55%, 100% 100%);
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(255, 225, 184, .30),
+      transparent 35%
+    ),
+    linear-gradient(
+      135deg,
+      #26070c,
+      #5c0e17 45%,
+      #1b0509
+    );
 }
 
-.hero-content{
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  color: var(--ivory);
-  padding: 7rem 1.4rem 16vh;
-  max-width: 780px;
-}
 
-.ik-onkar{
-  font-family: var(--font-display-pa);
-  font-size: clamp(2.6rem, 7vw, 4.2rem);
-  color: var(--gold-light);
-  text-shadow: 0 0 18px rgba(233,214,160,0.55), 0 0 40px rgba(233,214,160,0.25);
-  animation: ik-onkar-in 1.6s var(--ease-royal) both, ik-onkar-glow 4s ease-in-out infinite 1.6s;
-  margin-bottom: 0.6rem;
-}
-@keyframes ik-onkar-in{
-  0%{ opacity: 0; transform: scale(0.6) translateY(-16px); filter: blur(6px); }
-  100%{ opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
-}
-@keyframes ik-onkar-glow{
-  0%,100%{ text-shadow: 0 0 18px rgba(233,214,160,0.5), 0 0 40px rgba(233,214,160,0.2); }
-  50%{ text-shadow: 0 0 28px rgba(233,214,160,0.85), 0 0 60px rgba(233,214,160,0.4); }
-}
+/* ============================================================
+   BACKGROUND
+   ============================================================ */
 
-.hero-blessing{
-  font-size: clamp(1.05rem, 2.6vw, 1.4rem);
-  line-height: 1.7;
-  color: var(--gold-light);
-  margin: 0 0 0.4rem;
-  opacity: 0;
-  animation: fade-up 1s var(--ease-royal) 0.5s both;
-}
-.hero-blessing-en{
-  font-family: var(--font-accent-en);
-  font-size: 0.9rem;
-  letter-spacing: 0.03em;
-  color: rgba(251,246,236,0.85);
-  max-width: 480px;
-  margin: 0 auto 1.6rem;
-  opacity: 0;
-  animation: fade-up 1s var(--ease-royal) 0.75s both;
-}
-
-.hero-names{
-  margin: 0 0 1rem;
-  font-family: var(--font-display-en);
-  font-weight: 600;
-  font-size: clamp(2.4rem, 7vw, 4.4rem);
-  line-height: 1.15;
-  opacity: 0;
-  animation: fade-up 1.1s var(--ease-royal) 1s both;
-}
-.hero-names .name{ display: inline-block; }
-.hero-names .amp{
-  display: block;
-  font-style: italic;
-  font-size: 0.5em;
-  color: var(--gold-light);
-  margin: 0.15em 0;
-}
-
-.hero-date{
-  font-family: var(--font-accent-en);
-  letter-spacing: 0.08em;
-  font-size: 0.95rem;
-  color: var(--gold-light);
-  margin-bottom: 2.4rem;
-  opacity: 0;
-  animation: fade-up 1s var(--ease-royal) 1.25s both;
-}
-
-@keyframes fade-up{
-  0%{ opacity: 0; transform: translateY(22px); }
-  100%{ opacity: 1; transform: translateY(0); }
-}
-
-.btn-open-invitation{
-  position: relative;
-  overflow: hidden;
-  padding: 1rem 2.6rem;
-  border: 1px solid var(--gold-light);
-  border-radius: 999px;
-  background: transparent;
-  color: var(--ivory);
-  font-family: var(--font-accent-en);
-  letter-spacing: 0.1em;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  opacity: 0;
-  animation: fade-up 1s var(--ease-royal) 1.5s both, glow-ring 3s ease-in-out infinite 2.6s;
-  transition: color 0.35s, background 0.35s;
-}
-.btn-open-invitation:hover{ background: var(--gold); color: var(--maroon-dark); }
-.btn-shine{
-  position: absolute; top: 0; left: -60%;
-  width: 40%; height: 100%;
-  background: linear-gradient(115deg, transparent, rgba(255,255,255,0.55), transparent);
-  animation: shine-sweep 3.2s ease-in-out infinite 2.6s;
-}
-@keyframes shine-sweep{
-  0%{ left: -60%; }
-  40%, 100%{ left: 130%; }
-}
-@keyframes glow-ring{
-  0%,100%{ box-shadow: 0 0 0 0 rgba(233,214,160,0.35); }
-  50%{ box-shadow: 0 0 0 8px rgba(233,214,160,0); }
-}
-
-.scroll-cue{
-  position: absolute; bottom: 4vh; left: 50%; transform: translateX(-50%);
-  z-index: 2;
-}
-.scroll-cue span{
-  display: block; width: 1px; height: 46px;
-  background: linear-gradient(var(--gold-light), transparent);
-  animation: scroll-cue-move 2s ease-in-out infinite;
-}
-@keyframes scroll-cue-move{
-  0%{ transform: scaleY(0.3); transform-origin: top; opacity: 0.4; }
-  50%{ transform: scaleY(1); transform-origin: top; opacity: 1; }
-  100%{ transform: scaleY(0.3); transform-origin: bottom; opacity: 0.4; }
-}
-
-/* ---------------------------------------------------------------
-   6. SHARED SECTION CHROME
-   --------------------------------------------------------------- */
-section{ position: relative; padding: var(--section-pad) clamp(1.2rem, 5vw, 4rem); }
-.section-eyebrow{
-  display: flex; align-items: center; justify-content: center; gap: 0.8rem;
-  font-family: var(--font-body-pa), var(--font-accent-en);
-  font-size: 0.78rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gold-deep);
-  margin-bottom: 0.8rem;
-}
-.eyebrow-line{ width: 34px; height: 1px; background: var(--gold-deep); }
-
-.section-title{
-  text-align: center;
-  align-items: center;
-  margin: 0 auto 3rem;
-  color: var(--maroon);
-}
-.section-title .pa{ font-size: clamp(1.9rem, 5vw, 2.8rem); font-weight: 600; }
-.section-title .en{ font-size: clamp(0.95rem, 2vw, 1.15rem); color: var(--gold-deep); }
-
-/* Reveal-on-scroll utility, toggled by script.js via IntersectionObserver */
-.reveal{ opacity: 0; transform: translateY(28px); transition: opacity 0.9s var(--ease-royal), transform 0.9s var(--ease-royal); }
-.reveal.in-view{ opacity: 1; transform: translateY(0); }
-
-/* Glassmorphism card + gold corner ornaments (signature motif) */
-.glass-card{
-  position: relative;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--glass-shadow);
-  backdrop-filter: blur(16px) saturate(150%);
-  -webkit-backdrop-filter: blur(16px) saturate(150%);
-  padding: clamp(1.6rem, 4vw, 2.8rem);
-}
-.glass-card::before, .glass-card::after{
-  content: "";
+.opening-bg {
   position: absolute;
-  width: 46px; height: 46px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 46 46'%3E%3Cpath d='M2 2 Q2 30 30 30 Q44 30 44 18' fill='none' stroke='%23C9A24B' stroke-width='1.4'/%3E%3Ccircle cx='30' cy='30' r='3' fill='%23C9A24B'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  opacity: 0.85;
+  inset: 0;
+
+  background-image:
+    linear-gradient(
+      rgba(32, 4, 8, .28),
+      rgba(32, 4, 8, .45)
+    ),
+    url("assets/wedding-opening.png");
+
+  background-size: cover;
+  background-position: center;
+
+  transform: scale(1.08);
+
+  animation:
+    openingZoom 14s ease-in-out infinite alternate;
+
+  filter: saturate(1.05);
+}
+
+
+@keyframes openingZoom {
+
+  from {
+    transform: scale(1.06);
+  }
+
+  to {
+    transform: scale(1.13);
+  }
+
+}
+
+
+/* ============================================================
+   BRAND
+   ============================================================ */
+
+.opening-brand {
+  position: absolute;
+  top: 5vh;
+  left: 50%;
+  transform: translateX(-50%);
+
+  z-index: 30;
+
+  text-align: center;
+
+  color: #f8e3b2;
+
+  animation: brandFloat 5s ease-in-out infinite;
+}
+
+
+@keyframes brandFloat {
+
+  0%,100% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(-6px);
+  }
+
+}
+
+
+.opening-khanda {
+  font-size: 42px;
+
+  text-shadow:
+    0 0 15px rgba(255,220,150,.6);
+}
+
+
+.monogram {
+  font-family: "Cormorant Garamond", serif;
+
+  font-size: clamp(55px, 8vw, 100px);
+
+  line-height: .85;
+
+  letter-spacing: 5px;
+
+  text-shadow:
+    0 5px 25px rgba(0,0,0,.4);
+}
+
+
+.monogram span {
+  font-size: .55em;
+  color: #f4c77d;
+}
+
+
+.opening-subtitle {
+  margin-top: 15px;
+
+  letter-spacing: 5px;
+
+  font-size: 12px;
+
+  opacity: .9;
+}
+
+
+/* ============================================================
+   COUPLE
+   ============================================================ */
+
+.animated-couple {
+  position: absolute;
+
+  z-index: 15;
+
+  left: 50%;
+  bottom: 0;
+
+  width: min(700px, 75vw);
+
+  height: 70vh;
+
+  transform:
+    translateX(-50%);
+
+  display: flex;
+
+  align-items: flex-end;
+  justify-content: center;
+
   pointer-events: none;
 }
-.glass-card::before{ top: -1px; left: -1px; }
-.glass-card::after{ bottom: -1px; right: -1px; transform: rotate(180deg); }
 
-/* ---------------------------------------------------------------
-   7. COUNTDOWN
-   --------------------------------------------------------------- */
-.countdown-section{ text-align: center; background: var(--ivory-deep); }
-.countdown-grid{
-  display: grid;
-  grid-template-columns: repeat(4, minmax(70px, 140px));
-  gap: clamp(0.8rem, 2.4vw, 1.8rem);
-  justify-content: center;
-}
-.countdown-cell{
+
+.groom-character,
+.bride-character {
+
   position: relative;
-  background: var(--paper);
-  border: 1px solid var(--gold);
-  border-radius: var(--radius-md);
-  padding: clamp(1rem, 3vw, 1.6rem) 0.5rem;
-  box-shadow: 0 14px 34px -18px rgba(107,15,26,0.35);
+
+  height: 100%;
+
+  display: flex;
+
+  align-items: flex-end;
+
+  filter:
+    drop-shadow(
+      0 20px 25px rgba(0,0,0,.45)
+    );
 }
-.countdown-cell::before{
-  content: "";
-  position: absolute; inset: 5px;
-  border: 1px solid rgba(201,162,75,0.4);
-  border-radius: calc(var(--radius-md) - 6px);
+
+
+.groom-character {
+  margin-left: -20px;
+
+  animation:
+    groomFloat 4s ease-in-out infinite;
+}
+
+
+.bride-character {
+  margin-right: -20px;
+
+  animation:
+    brideFloat 4.5s ease-in-out infinite;
+}
+
+
+.groom-character img,
+.bride-character img {
+
+  height: 85%;
+
+  width: auto;
+
+  object-fit: contain;
+}
+
+
+@keyframes groomFloat {
+
+  0%,100% {
+    transform:
+      translateY(0)
+      rotate(0deg);
+  }
+
+  50% {
+    transform:
+      translateY(-10px)
+      rotate(-.7deg);
+  }
+
+}
+
+
+@keyframes brideFloat {
+
+  0%,100% {
+    transform:
+      translateY(0)
+      rotate(0deg);
+  }
+
+  50% {
+    transform:
+      translateY(-13px)
+      rotate(.7deg);
+  }
+
+}
+
+
+/* Subtle light behind couple */
+
+.couple-glow {
+
+  position: absolute;
+
+  width: 450px;
+  height: 450px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,210,130,.35),
+      transparent 70%
+    );
+
+  filter: blur(15px);
+
+  animation: glowPulse 4s ease-in-out infinite;
+}
+
+
+@keyframes glowPulse {
+
+  0%,100% {
+    opacity: .55;
+    transform: scale(.95);
+  }
+
+  50% {
+    opacity: .9;
+    transform: scale(1.08);
+  }
+
+}
+
+
+/* ============================================================
+   GATES
+   ============================================================ */
+
+.gate {
+
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+
+  width: 50%;
+
+  z-index: 40;
+
+  background:
+
+    linear-gradient(
+      90deg,
+      rgba(30,10,4,.2),
+      transparent 10%,
+      rgba(0,0,0,.25)
+    ),
+
+    repeating-linear-gradient(
+      90deg,
+      #32180e 0,
+      #5d301b 8%,
+      #3a1b0e 16%
+    );
+
+  border: 8px solid #b77a32;
+
+  box-shadow:
+    inset 0 0 50px rgba(0,0,0,.65),
+    0 0 30px rgba(0,0,0,.5);
+
+  transition:
+    transform 1.8s cubic-bezier(.77,0,.18,1);
+}
+
+
+.gate-left {
+  left: 0;
+
+  transform-origin: left center;
+}
+
+
+.gate-right {
+  right: 0;
+
+  transform-origin: right center;
+}
+
+
+.gate-inner {
+
+  height: 100%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+
+  color: #e6b65c;
+
+  font-size: 80px;
+
+  text-shadow:
+    0 0 20px rgba(255,200,100,.3);
+}
+
+
+.gate-floral {
+
+  margin-top: 40px;
+
+  font-size: 70px;
+
+  opacity: .7;
+}
+
+
+/* OPEN STATE */
+
+.wedding-opening.is-open .gate-left {
+
+  transform:
+    perspective(1200px)
+    rotateY(-100deg);
+}
+
+
+.wedding-opening.is-open .gate-right {
+
+  transform:
+    perspective(1200px)
+    rotateY(100deg);
+}
+
+
+.wedding-opening.is-open .open-wedding {
+
+  opacity: 0;
+  transform:
+    translateX(-50%)
+    translateY(40px)
+    scale(.8);
   pointer-events: none;
 }
-.countdown-num{
-  display: block;
-  font-family: var(--font-display-en);
-  font-weight: 700;
-  font-size: clamp(1.8rem, 5vw, 3rem);
-  color: var(--maroon);
-  font-variant-numeric: tabular-nums;
-}
-.countdown-num.tick{ animation: tick-pulse 0.5s var(--ease-royal); }
-@keyframes tick-pulse{
-  0%{ transform: scale(1); }
-  30%{ transform: scale(1.18); color: var(--gold-deep); }
-  100%{ transform: scale(1); }
-}
-.countdown-label{
-  display: block;
-  margin-top: 0.3rem;
-  font-family: var(--font-body-pa), var(--font-accent-en);
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  color: var(--ink-soft);
+
+
+.wedding-opening.is-open .animated-couple {
+
+  animation:
+    coupleReveal 1.8s ease forwards;
 }
 
-/* ---------------------------------------------------------------
-   8. EVENT TABS
-   --------------------------------------------------------------- */
-.events-section{ background: var(--ivory); }
-.event-tabs{
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 2.6rem;
-  flex-wrap: wrap;
-}
-.event-tab{
-  display: flex; align-items: center; gap: 0.7rem;
-  background: var(--paper);
-  border: 1px solid var(--glass-border);
-  border-radius: 999px;
-  padding: 0.7rem 1.4rem 0.7rem 0.8rem;
-  color: var(--ink-soft);
-  transition: all 0.35s var(--ease-royal);
-}
-.event-tab .tab-num{
-  width: 30px; height: 30px;
-  border-radius: 50%;
-  border: 1px solid var(--gold);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-accent-en);
-  font-size: 0.75rem;
-  color: var(--gold-deep);
-}
-.event-tab .tab-titles{ display: flex; flex-direction: column; text-align: left; line-height: 1.25; }
-.event-tab .tab-titles .en{ font-size: 0.72em; }
-.event-tab.active{
-  background: var(--maroon);
-  border-color: var(--maroon);
-  color: var(--ivory);
-  box-shadow: 0 14px 30px -14px rgba(107,15,26,0.6);
-}
-.event-tab.active .tab-num{ border-color: var(--gold-light); color: var(--gold-light); }
 
-.event-panels{ max-width: 760px; margin: 0 auto; position: relative; }
-.event-panel{
-  animation: panel-in 0.6s var(--ease-royal) both;
-}
-@keyframes panel-in{
-  0%{ opacity: 0; transform: translateY(16px) scale(0.985); }
-  100%{ opacity: 1; transform: translateY(0) scale(1); }
+@keyframes coupleReveal {
+
+  from {
+    opacity: .2;
+    transform:
+      translateX(-50%)
+      scale(.85);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateX(-50%)
+      scale(1);
+  }
+
 }
 
-.event-card-head h3{
-  color: var(--maroon);
-  margin: 0 0 1.6rem;
-  text-align: center;
-}
-.event-card-head h3 .pa{ font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 600; }
-.event-card-head h3 .en{ font-size: 0.95rem; color: var(--gold-deep); }
 
-.event-meta{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 1.1rem;
-  padding: 1.2rem 0;
-  border-top: 1px solid var(--glass-border);
-  border-bottom: 1px solid var(--glass-border);
-  margin-bottom: 1.6rem;
-}
-.meta-item{ display: flex; flex-direction: column; gap: 0.2rem; text-align: center; }
-.meta-label{
-  font-family: var(--font-body-pa), var(--font-accent-en);
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gold-deep);
-}
-.meta-value{ font-family: var(--font-display-en); font-size: 1.1rem; color: var(--ink); }
+/* ============================================================
+   OPEN BUTTON
+   ============================================================ */
 
-.event-schedule h4{
-  font-family: var(--font-body-pa), var(--font-accent-en);
-  font-size: 0.85rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--maroon);
-  margin: 0 0 0.9rem;
-  text-align: center;
-}
-.event-schedule ul{ display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 1.8rem; }
-.event-schedule li{
-  display: flex; align-items: baseline; gap: 0.9rem;
-  padding-bottom: 0.65rem;
-  border-bottom: 1px dashed rgba(201,162,75,0.4);
-  font-size: 0.95rem;
-}
-.event-schedule li time{
-  font-family: var(--font-accent-en);
-  color: var(--maroon);
-  min-width: 76px;
-  font-size: 0.85rem;
-}
+.open-wedding {
 
-.event-actions{ display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  position: absolute;
 
-/* ---------------------------------------------------------------
-   9. BUTTONS
-   --------------------------------------------------------------- */
-.btn-gold, .btn-outline-gold{
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.85rem 1.8rem;
-  border-radius: 999px;
-  font-family: var(--font-accent-en);
-  font-size: 0.82rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  transition: transform 0.3s var(--ease-royal), box-shadow 0.3s var(--ease-royal), background 0.3s;
-  border: 1px solid var(--gold);
-}
-.btn-gold{
-  background: linear-gradient(135deg, var(--gold-light), var(--gold) 60%, var(--gold-deep));
-  color: var(--maroon-dark);
-}
-.btn-gold:hover{ transform: translateY(-2px); box-shadow: 0 14px 30px -14px rgba(140,106,36,0.6); }
-.btn-outline-gold{
-  background: transparent;
-  color: var(--maroon);
-}
-.btn-outline-gold:hover{ background: var(--maroon); color: var(--ivory); border-color: var(--maroon); transform: translateY(-2px); }
+  z-index: 50;
 
-/* ---------------------------------------------------------------
-   10. PARENTS SECTION
-   --------------------------------------------------------------- */
-.parents-section{ background: var(--ivory-deep); }
-.parents-grid{
-  max-width: 980px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: clamp(1.2rem, 4vw, 2.4rem);
-  align-items: center;
-}
-.parents-card{ text-align: center; }
-.parents-kicker{
-  display: block;
-  font-family: var(--font-body-pa), var(--font-accent-en);
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--gold-deep);
-  margin-bottom: 0.5rem;
-}
-.parents-child{
-  font-family: var(--font-display-en);
-  color: var(--maroon);
-  font-size: 1.5rem;
-  margin: 0 0 1.2rem;
-}
-.parents-list{ display: flex; flex-direction: column; gap: 0.8rem; }
-.parents-list li span{
-  display: block;
-  font-family: var(--font-body-pa), var(--font-accent-en);
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--gold-deep);
-  margin-bottom: 0.15rem;
-}
-.parents-list li strong{ font-family: var(--font-display-en); font-weight: 500; font-size: 1.05rem; }
+  left: 50%;
+  bottom: 9vh;
 
-.parents-divider{ display: flex; justify-content: center; }
-.divider-khanda{ width: 48px; height: 48px; fill: var(--gold-deep); animation: spin-slow 22s linear infinite; }
-@keyframes spin-slow{ to{ transform: rotate(360deg); } }
+  transform: translateX(-50%);
 
-@media (max-width: 760px){
-  .parents-grid{ grid-template-columns: 1fr; }
-  .parents-divider{ order: 2; }
-}
+  width: 260px;
 
-/* ---------------------------------------------------------------
-   11. QUOTE
-   --------------------------------------------------------------- */
-.quote-section{
-  background: linear-gradient(160deg, var(--maroon-dark), var(--maroon) 60%, var(--maroon-glow));
-  color: var(--ivory);
-  text-align: center;
-}
-.quote-frame{ max-width: 700px; margin: 0 auto; position: relative; }
-.quote-khanda{
-  width: 44px; height: 44px;
-  fill: var(--gold-light);
-  margin: 0 auto 1.4rem;
-  animation: spin-slow 26s linear infinite;
-}
-.quote-pa{ font-size: clamp(1.3rem, 3.4vw, 1.8rem); line-height: 1.9; color: var(--gold-light); margin-bottom: 1.2rem; }
-.quote-en{ font-family: var(--font-accent-en); font-size: 1rem; letter-spacing: 0.02em; color: rgba(251,246,236,0.85); }
+  padding: 20px 30px;
 
-/* ---------------------------------------------------------------
-   12. GALLERY / CAROUSEL
-   --------------------------------------------------------------- */
-.gallery-section{ background: var(--ivory); text-align: center; }
-.carousel{ position: relative; max-width: 520px; margin: 0 auto; }
-.carousel-track{
-  display: flex;
-  transition: transform 0.6s var(--ease-royal);
-}
-.carousel-slide{ flex: 0 0 100%; margin: 0; }
-.placeholder-frame{
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--gold);
-  outline: 8px solid var(--paper);
-  outline-offset: -14px;
-  object-fit: cover;
-  background: linear-gradient(160deg, var(--ivory-deep), var(--gold-light));
-}
-.placeholder-add{
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 0.5rem;
-  color: var(--gold-deep);
-  border-style: dashed;
-  background: repeating-linear-gradient(135deg, rgba(201,162,75,0.06) 0 12px, transparent 12px 24px);
-}
-.placeholder-add span{ font-size: 2.4rem; font-family: var(--font-display-en); }
-.placeholder-add p{ font-size: 0.85rem; margin: 0; }
-.carousel-slide figcaption{
-  margin-top: 1rem;
-  display: flex; flex-direction: column; gap: 0.1rem;
-  color: var(--maroon);
-}
-.carousel-slide figcaption .pa{ font-size: 1.1rem; }
-.carousel-slide figcaption .en{ font-size: 0.8rem; color: var(--gold-deep); }
+  border: 2px solid #e4b968;
 
-.carousel-arrow{
-  position: absolute; top: 42%; transform: translateY(-50%);
-  width: 42px; height: 42px;
-  border-radius: 50%;
-  border: 1px solid var(--gold);
-  background: var(--paper);
-  color: var(--maroon);
-}
-.carousel-arrow.prev{ left: -14px; }
-.carousel-arrow.next{ right: -14px; }
-@media (max-width: 600px){
-  .carousel-arrow.prev{ left: 2px; }
-  .carousel-arrow.next{ right: 2px; }
-}
-.carousel-dots{ display: flex; justify-content: center; gap: 0.5rem; margin-top: 1.2rem; }
-.carousel-dots button{
-  width: 8px; height: 8px; border-radius: 50%;
-  border: 1px solid var(--gold-deep);
-  background: transparent;
-  padding: 0;
-}
-.carousel-dots button.active{ background: var(--gold-deep); }
+  border-radius: 12px;
 
-/* ---------------------------------------------------------------
-   13. RSVP
-   --------------------------------------------------------------- */
-.rsvp-section{ background: var(--ivory-deep); }
-.rsvp-wrap{ max-width: 560px; margin: 0 auto; }
-.form-row{ margin-bottom: 1.3rem; display: flex; flex-direction: column; gap: 0.4rem; }
-.form-row label, .form-row > span{
-  font-family: var(--font-body-pa), var(--font-accent-en);
-  font-size: 0.78rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--gold-deep);
-}
-.form-row input, .form-row textarea{
-  border: 1px solid var(--glass-border);
-  background: rgba(255,255,255,0.7);
-  border-radius: var(--radius-sm);
-  padding: 0.75rem 0.9rem;
-  font-family: var(--font-body-en);
-  font-size: 0.95rem;
-  color: var(--ink);
-  resize: vertical;
-  transition: border-color 0.25s, box-shadow 0.25s;
-}
-.form-row input:focus, .form-row textarea:focus{
-  outline: none;
-  border-color: var(--maroon);
-  box-shadow: 0 0 0 3px rgba(107,15,26,0.12);
-}
-.radio-group{ display: flex; gap: 0.8rem; }
-.radio-pill{
-  display: flex; align-items: center; gap: 0.4rem;
-  border: 1px solid var(--glass-border);
-  border-radius: 999px;
-  padding: 0.5rem 1.1rem;
+  color: #fff3d3;
+
+  background:
+    linear-gradient(
+      135deg,
+      #6b0d1b,
+      #39060d
+    );
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,.45),
+    0 0 30px rgba(228,185,104,.18);
+
   cursor: pointer;
-  font-size: 0.85rem;
-}
-.radio-pill input{ accent-color: var(--maroon); }
-.btn-rsvp-submit{ width: 100%; justify-content: center; margin-top: 0.4rem; border: none; }
-.form-status{ text-align: center; font-size: 0.85rem; margin-top: 1rem; min-height: 1.2em; color: var(--maroon); }
 
-/* ---------------------------------------------------------------
-   14. CALENDAR CTA
-   --------------------------------------------------------------- */
-.calendar-section{ text-align: center; }
-.calendar-actions{ display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  transition:
+    all .6s ease;
 
-/* ---------------------------------------------------------------
-   15. FOOTER
-   --------------------------------------------------------------- */
-.site-footer{
-  position: relative;
   overflow: hidden;
-  background: var(--maroon-dark);
-  color: var(--ivory);
-  text-align: center;
-  padding: 5rem 1.4rem 3rem;
 }
-.khanda-watermark{
-  position: absolute;
-  width: min(70vw, 560px); height: min(70vw, 560px);
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  fill: rgba(233,214,160,0.05);
-  animation: spin-slow 60s linear infinite;
-  pointer-events: none;
-}
-.footer-content{ position: relative; z-index: 1; max-width: 560px; margin: 0 auto; }
-.footer-ik{ font-size: 2.2rem; margin-bottom: 1rem; color: var(--gold-light); }
-.footer-line-en{ font-family: var(--font-accent-en); font-size: 0.95rem; margin: 0 0 0.6rem; color: rgba(251,246,236,0.9); }
-.footer-line-pa{ font-size: 1.25rem; color: var(--gold-light); margin: 0 0 1.8rem; }
-.footer-names{ font-family: var(--font-display-en); font-size: 1.3rem; margin-bottom: 0.6rem; }
-.footer-names span{ color: var(--gold-light); font-style: italic; padding: 0 0.3em; }
-.footer-credit{ font-size: 0.72rem; letter-spacing: 0.05em; color: rgba(251,246,236,0.55); }
 
-/* ---------------------------------------------------------------
-   16. RESPONSIVE FINE-TUNING
-   --------------------------------------------------------------- */
-@media (max-width: 480px){
-  .countdown-grid{ grid-template-columns: repeat(4, 1fr); gap: 0.6rem; }
-  .event-tab{ flex: 1 1 100%; justify-content: center; }
-  .hero-content{ padding-top: 6rem; }
+
+.open-wedding:hover {
+
+  transform:
+    translateX(-50%)
+    translateY(-5px);
+
+  box-shadow:
+    0 20px 50px rgba(0,0,0,.5),
+    0 0 40px rgba(228,185,104,.4);
+}
+
+
+.open-wedding-small {
+
+  display: block;
+
+  font-size: 10px;
+
+  letter-spacing: 4px;
+
+  opacity: .75;
+}
+
+
+.open-wedding-main {
+
+  display: block;
+
+  margin-top: 5px;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 30px;
+
+  font-style: italic;
+}
+
+
+.open-hand {
+
+  display: block;
+
+  font-size: 24px;
+
+  margin-top: 5px;
+
+  animation:
+    tapHand 1.3s ease-in-out infinite;
+}
+
+
+@keyframes tapHand {
+
+  0%,100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(7px);
+  }
+
+}
+
+
+.open-shimmer {
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      110deg,
+      transparent 35%,
+      rgba(255,255,255,.25),
+      transparent 65%
+    );
+
+  transform: translateX(-120%);
+
+  animation:
+    shimmer 3s infinite;
+}
+
+
+@keyframes shimmer {
+
+  0% {
+    transform: translateX(-120%);
+  }
+
+  40%,100% {
+    transform: translateX(120%);
+  }
+
+}
+
+
+/* ============================================================
+   SCRATCH SCREEN
+   ============================================================ */
+
+.scratch-screen {
+
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 70;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 20px;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #fff0d0,
+      #d9a85d 150%
+    );
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transform: scale(1.05);
+
+  transition:
+    opacity 1s ease,
+    transform 1s ease;
+}
+
+
+.wedding-opening.show-scratch .scratch-screen {
+
+  opacity: 1;
+
+  pointer-events: auto;
+
+  transform: scale(1);
+}
+
+
+.scratch-content {
+
+  max-width: 600px;
+
+  width: 100%;
+}
+
+
+.scratch-kicker {
+
+  letter-spacing: 5px;
+
+  font-size: 12px;
+
+  color: #751322;
+}
+
+
+.scratch-content h2 {
+
+  margin: 5px 0;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: clamp(40px, 7vw, 70px);
+
+  color: #5c0e17;
+}
+
+
+.scratch-instruction {
+
+  color: #70422d;
+
+  margin-bottom: 25px;
+}
+
+
+/* ============================================================
+   HEART
+   ============================================================ */
+
+.scratch-heart {
+
+  position: relative;
+
+  width: min(330px, 80vw);
+
+  aspect-ratio: 1;
+
+  margin: auto;
+
+  filter:
+    drop-shadow(
+      0 15px 25px rgba(75,20,10,.25)
+    );
+}
+
+
+.heart-reveal {
+
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+
+  color: #fff3da;
+
+  background:
+
+    linear-gradient(
+      135deg,
+      #8c182c,
+      #4d0712
+    );
+
+  clip-path:
+    polygon(
+      50% 90%,
+      10% 50%,
+      8% 30%,
+      18% 15%,
+      35% 12%,
+      50% 27%,
+      65% 12%,
+      82% 15%,
+      92% 30%,
+      90% 50%
+    );
+
+  padding-top: 30px;
+}
+
+
+.heart-date {
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 54px;
+
+  font-weight: 600;
+}
+
+
+.heart-month {
+
+  letter-spacing: 8px;
+
+  font-size: 14px;
+}
+
+
+.heart-year {
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size: 42px;
+}
+
+
+.heart-city {
+
+  margin-top: 8px;
+
+  letter-spacing: 5px;
+
+  font-size: 12px;
+}
+
+
+/* Scratch canvas */
+
+#scratchCanvas {
+
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  cursor: crosshair;
+
+  touch-action: none;
+
+  border-radius: 30px;
+}
+
+
+/* ============================================================
+   NAMES
+   ============================================================ */
+
+.scratch-names {
+
+  margin-top: 30px;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-style: italic;
+
+  font-size: clamp(30px, 5vw, 45px);
+
+  color: #66101c;
+}
+
+
+.scratch-names span {
+
+  color: #b68435;
+
+  margin: 0 8px;
+}
+
+
+.scratch-tagline {
+
+  margin-top: 8px;
+
+  letter-spacing: 4px;
+
+  font-size: 10px;
+
+  color: #70422d;
+}
+
+
+/* ============================================================
+   CONTINUE
+   ============================================================ */
+
+.continue-button {
+
+  margin-top: 25px;
+
+  padding: 14px 30px;
+
+  border: 1px solid #8c182c;
+
+  background: #5c0e17;
+
+  color: white;
+
+  border-radius: 30px;
+
+  font-size: 14px;
+
+  cursor: pointer;
+
+  opacity: 0;
+
+  transform: translateY(15px);
+
+  transition: all .5s ease;
+}
+
+
+.continue-button.visible {
+
+  opacity: 1;
+
+  transform: translateY(0);
+}
+
+
+/* ============================================================
+   PETALS
+   ============================================================ */
+
+.petal {
+
+  position: absolute;
+
+  top: -30px;
+
+  width: 14px;
+  height: 20px;
+
+  background: #e9a0b0;
+
+  border-radius:
+    100% 0 100% 0;
+
+  opacity: .8;
+
+  animation:
+    petalFall linear forwards;
+}
+
+
+@keyframes petalFall {
+
+  to {
+
+    transform:
+      translate3d(
+        var(--drift),
+        110vh,
+        0
+      )
+      rotate(720deg);
+
+    opacity: 0;
+  }
+
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+  .opening-brand {
+    top: 3vh;
+  }
+
+  .opening-khanda {
+    font-size: 30px;
+  }
+
+  .monogram {
+    font-size: 58px;
+  }
+
+  .opening-subtitle {
+    font-size: 9px;
+    letter-spacing: 3px;
+  }
+
+  .animated-couple {
+
+    width: 110vw;
+
+    height: 63vh;
+
+  }
+
+  .groom-character img,
+  .bride-character img {
+
+    height: 75%;
+  }
+
+  .open-wedding {
+
+    bottom: 6vh;
+
+    width: 220px;
+
+  }
+
+  .scratch-content h2 {
+    font-size: 42px;
+  }
+
+  .scratch-heart {
+    width: min(300px, 78vw);
+  }
+
 }
