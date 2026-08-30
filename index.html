@@ -2,179 +2,199 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Danveer & Harman Preet | Wedding Invitation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#6d102c">
+<meta name="description" content="Danveer & Harman Preet — Wedding Invitation">
+<title>Danveer & Harman Preet | Our Forever Begins</title>
+<link rel="icon" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Great+Vibes&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div id="loader"><div class="loader-ring"></div><span>With love & blessings…</span></div>
 
-<!-- Falling petals layer (persists across every screen) -->
-<div class="petals" id="petals" aria-hidden="true"></div>
+<div class="petals" aria-hidden="true"></div>
+<button id="musicBtn" class="floating-music" aria-label="Toggle music">♫</button>
 
-<!-- Progress dots -->
-<div class="dots" id="dots"></div>
-
-<div class="deck" id="deck">
-
-  <!-- SCREEN 1 : COVER -->
-  <section class="screen cover active" data-screen="0">
-    <button class="music-btn" id="musicBtn" aria-label="Toggle music">
-      <svg viewBox="0 0 24 24" class="note-icon"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-    </button>
-    <div class="khanda">☬</div>
-    <h1 class="dh-mono">D <span class="heart">♡</span> H</h1>
-    <p class="eyebrow">Our Forever Begins&hellip;</p>
-    <div class="photo-frame hero-photo">
-      <div class="photo-placeholder">
-        <svg viewBox="0 0 24 24"><path d="M4 7h3l2-3h6l2 3h3v13H4z"/><circle cx="12" cy="13" r="4"/></svg>
-        <span>Add couple photo<br>(portrait, 1080×1350px)</span>
-      </div>
+<main id="invitation">
+  <!-- 1. TAP TO OPEN -->
+  <section id="cover" class="page hero page-bg open-bg">
+    <div class="shade"></div>
+    <div class="hero-top">
+      <div class="monogram">D <span>♡</span> H</div>
+      <div class="subtitle">OUR FOREVER BEGINS...</div>
     </div>
-    <button class="cta-plaque" data-next>
-      <span class="cta-label">You are invited</span>
-      <span class="cta-main">Tap to Open</span>
-      <svg class="tap-icon" viewBox="0 0 24 24"><path d="M9 11.5V6a2 2 0 1 1 4 0v5.5M9 11.5V9a1.5 1.5 0 1 1 3 0v.5M13 11.5V8a1.5 1.5 0 1 1 3 0v5M16 13v-1.5a1.5 1.5 0 1 1 3 0V15a6 6 0 0 1-6 6h-2a6 6 0 0 1-5.2-3l-2-3.5a1.4 1.4 0 0 1 2.3-1.6l1.4 1.8"/></svg>
-    </button>
+    <div class="hero-bottom">
+      <button id="openBtn" class="gold-btn large">Tap to Open <span>↗</span></button>
+      <button id="calendarBtnTop" class="text-btn">＋ Add the celebration to your calendar</button>
+    </div>
+    <div class="scroll-hint">Scroll to explore <span>↓</span></div>
   </section>
 
-  <!-- SCREEN 2 : OPENING DOORS -->
-  <section class="screen doors" data-screen="1">
-    <button class="music-btn"><svg viewBox="0 0 24 24" class="note-icon"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></button>
-    <p class="script-line">Opening<br><em>the Doors</em><br>to Our Story&hellip;</p>
-    <div class="door-wrap" id="doorWrap">
-      <div class="door door-left"><span class="khanda-small">☬</span></div>
-      <div class="door door-right"><span class="khanda-small">☬</span></div>
+  <!-- 1.5 Door transition -->
+  <section id="doors" class="page door-page">
+    <div class="door-scene">
+      <div class="door-backdrop"></div>
+      <div class="door-panel door-left"></div>
+      <div class="door-panel door-right"></div>
+      <div class="door-flower-frame"></div>
+      <div class="door-message">
+        <div class="smallcaps">OPENING</div>
+        <h2>the Doors<br><em>to Our Story...</em></h2>
+        <div class="tiny-heart">♥</div>
+      </div>
       <div class="door-glow"></div>
     </div>
-    <p class="tap-hint">tap anywhere to continue</p>
   </section>
 
-  <!-- SCREEN 3 : COUPLE -->
-  <section class="screen couple" data-screen="2">
-    <button class="music-btn"><svg viewBox="0 0 24 24" class="note-icon"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></button>
-    <h2 class="dh-mono small">D <span class="heart">♡</span> H</h2>
-    <p class="eyebrow">Our Forever Begins&hellip;</p>
-    <div class="photo-frame couple-photo">
-      <div class="photo-placeholder">
-        <svg viewBox="0 0 24 24"><path d="M4 7h3l2-3h6l2 3h3v13H4z"/><circle cx="12" cy="13" r="4"/></svg>
-        <span>Add couple photo<br>(portrait, 1080×1350px)</span>
+  <!-- 2. COUPLE -->
+  <section id="couple" class="page image-page couple-bg">
+    <div class="soft-mask couple-mask"></div>
+    <div class="couple-copy">
+      <div class="crown">♕</div>
+      <div class="script-logo">D <span>♡</span> H</div>
+      <div class="subtitle">OUR FOREVER BEGINS...</div>
+      <div class="divider">♥</div>
+      <p class="names">Danveer &amp; Harman Preet</p>
+      <p class="tagline">A journey of two souls,<br>one destiny.</p>
+    </div>
+  </section>
+
+  <!-- 3. SCRATCH -->
+  <section id="scratchSection" class="page image-page scratch-bg">
+    <div class="soft-mask scratch-mask"></div>
+    <div class="scratch-copy">
+      <div class="eyebrow">A SPECIAL DATE</div>
+      <h2>Scratch<br><em>the Heart</em></h2>
+      <p>Reveal the day our<br>forever begins</p>
+      <div class="scratch-heart-wrap">
+        <div class="revealed-date">
+          <div>23–25</div>
+          <span>OCTOBER</span>
+          <strong>2026</strong>
+        </div>
+        <canvas id="scratchCanvas" width="230" height="205"></canvas>
       </div>
     </div>
-    <button class="next-arrow" data-next aria-label="Next">›</button>
   </section>
 
-  <!-- SCREEN 4 : SCRATCH CARD -->
-  <section class="screen scratch-screen" data-screen="3">
-    <button class="music-btn"><svg viewBox="0 0 24 24" class="note-icon"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></button>
-    <p class="tiny-label">A SPECIAL DATE</p>
-    <h2 class="script-title">Scratch the Heart</h2>
-    <p class="sub-line">Reveal the day our forever begins</p>
-    <div class="scratch-wrap">
-      <div class="reveal-heart" id="revealHeart">23–25 Oct 2026</div>
-      <canvas id="scratchCanvas" width="300" height="300"></canvas>
-    </div>
-    <p class="tap-hint" id="scratchHint">scratch the gold heart with your finger</p>
-    <button class="next-arrow ghost" data-next id="scratchNextBtn" style="opacity:0">›</button>
-  </section>
-
-  <!-- SCREEN 5 : DATE HEART -->
-  <section class="screen date-screen" data-screen="4">
-    <button class="music-btn"><svg viewBox="0 0 24 24" class="note-icon"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></button>
-    <div class="heart-frame">
-      <div class="heart-inner">
-        <span class="big-dates">23&ndash;25<br>OCTOBER<br>2026</span>
-        <span class="place">AMRITSAR</span>
-        <div class="hr-mini"></div>
-        <span class="couple-names">Danveer &amp;<br>Harman Preet</span>
-        <span class="tag-line">A JOURNEY OF TWO SOULS,<br>ONE DESTINY</span>
+  <!-- 4. DATE / VENUE -->
+  <section id="date" class="page image-page date-bg">
+    <div class="soft-mask date-mask"></div>
+    <div class="date-copy">
+      <div class="heart-frame">
+        <div class="date-main">23–25</div>
+        <div class="date-month">OCTOBER</div>
+        <div class="date-year">2026</div>
+        <div class="line">♥</div>
+        <div class="date-place">AMRITSAR</div>
       </div>
+      <div class="date-names">Danveer &amp;<br>Harman Preet</div>
+      <p class="date-tag">A JOURNEY OF TWO SOULS,<br>ONE DESTINY.</p>
+      <button class="gold-btn" onclick="scrollToId('special')">Enter Invitation →</button>
     </div>
-    <button class="cta-btn" data-next>Enter Invitation <span class="arrow">→</span></button>
   </section>
 
-  <!-- SCREEN 6 : WELCOME -->
-  <section class="screen welcome-screen" data-screen="5">
-    <button class="music-btn"><svg viewBox="0 0 24 24" class="note-icon"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></button>
-    <h2 class="script-title">Welcome</h2>
-    <p class="welcome-copy">With the blessings of Waheguru<br>we invite you to be a special part<br>of our journey.</p>
-    <div class="heart-divider">♡</div>
-    <p class="welcome-names">Danveer &amp; Harman Preet</p>
-    <p class="welcome-sub">A Journey of Two Souls,<br>One Destiny.</p>
-    <div class="photo-frame silhouette-photo">
-      <div class="photo-placeholder small">
-        <svg viewBox="0 0 24 24"><path d="M4 7h3l2-3h6l2 3h3v13H4z"/><circle cx="12" cy="13" r="4"/></svg>
-        <span>Add landscape photo</span>
+  <!-- 5. WELCOME -->
+  <section id="welcome" class="page image-page welcome-bg">
+    <div class="soft-mask welcome-mask"></div>
+    <div class="welcome-copy">
+      <h2>Welcome</h2>
+      <p>With the blessings of Waheguru<br>we invite you to be a special part of<br>our journey.</p>
+      <div class="divider">♥</div>
+      <h3>Danveer &amp; Harman Preet</h3>
+      <p>A Journey of Two Souls,<br>One Destiny.</p>
+    </div>
+  </section>
+
+  <!-- 6. COUNTDOWN -->
+  <section id="countdown" class="page image-page countdown-bg">
+    <div class="soft-mask countdown-mask"></div>
+    <div class="count-copy">
+      <h2>Counting Down</h2>
+      <div class="subtitle">To Our Forever</div>
+      <div class="divider">♥</div>
+      <div class="timer-grid">
+        <div class="timer-card"><b id="days">000</b><span>Days</span></div>
+        <div class="timer-card"><b id="hours">00</b><span>Hours</span></div>
+        <div class="timer-card"><b id="minutes">00</b><span>Minutes</span></div>
+        <div class="timer-card"><b id="seconds">00</b><span>Seconds</span></div>
       </div>
+      <p class="quote">Some souls don't just meet,<br>they find home in each other.</p>
+      <div class="script-logo small">D <span>♡</span> H</div>
     </div>
-    <button class="next-arrow" data-next aria-label="Next">›</button>
   </section>
 
-  <!-- SCREEN 7 : SPECIAL DAYS -->
-  <section class="screen events-screen" data-screen="6">
-    <button class="music-btn"><svg viewBox="0 0 24 24" class="note-icon"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></button>
-    <h2 class="script-title">Our Special Days</h2>
-    <div class="event-card">
-      <p class="event-name">Shagun &amp; Ring Ceremony</p>
-      <p class="event-row"><span class="ico">📅</span> 23 OCT 2026</p>
-      <p class="event-row"><span class="ico">🕠</span> 6:30 PM</p>
-      <p class="event-row"><span class="ico">📍</span> Regenta Central, Amritsar</p>
+  <!-- 7. SPECIAL DAYS -->
+  <section id="special" class="page image-page special-bg">
+    <div class="special-overlay"></div>
+    <div class="special-copy">
+      <h2>Our<br><em>Special Days</em></h2>
+      <div class="event-card">
+        <div class="event-icon">▣</div>
+        <div>
+          <h3>Shagun &amp; Roka Ceremony</h3>
+          <p>23 OCT 2026</p><p>6:30 PM</p><p>Regenta Central<br>Amritsar</p>
+          <div class="event-actions">
+            <a class="mini-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Regenta+Central+Amritsar">Navigate</a>
+            <button class="mini-btn" onclick="addCalendar('shagun')">Add Calendar</button>
+          </div>
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="event-icon">▣</div>
+        <div>
+          <h3>Anand Karaj</h3>
+          <p>25 OCT 2026</p><p>11:00 AM</p><p>Sandoz<br>Amritsar</p>
+          <div class="event-actions">
+            <a class="mini-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Sandoz+Amritsar+Lawrence+Road">Navigate</a>
+            <button class="mini-btn" onclick="addCalendar('anand')">Add Calendar</button>
+          </div>
+        </div>
+      </div>
+      <div class="venue-note">Tap <b>Navigate</b> for turn-by-turn directions.</div>
     </div>
-    <div class="event-card">
-      <p class="event-name">Anand Karaj</p>
-      <p class="event-row"><span class="ico">📅</span> 25 OCT 2026</p>
-      <p class="event-row"><span class="ico">🕚</span> 11:00 AM</p>
-      <p class="event-row"><span class="ico">📍</span> Sandoz, Amritsar</p>
-    </div>
-    <button class="next-arrow" data-next aria-label="Next">›</button>
   </section>
 
-  <!-- SCREEN 8 : COUNTDOWN -->
-  <section class="screen countdown-screen" data-screen="7">
-    <button class="music-btn"><svg viewBox="0 0 24 24" class="note-icon"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></button>
-    <h2 class="script-title">Counting Down</h2>
-    <p class="sub-line">To Our Forever</p>
-    <div class="heart-divider">♡</div>
-    <div class="countdown-grid">
-      <div class="cd-box"><span id="cd-days">--</span><label>Days</label></div>
-      <div class="cd-box"><span id="cd-hours">--</span><label>Hours</label></div>
-      <div class="cd-box"><span id="cd-mins">--</span><label>Minutes</label></div>
-      <div class="cd-box"><span id="cd-secs">--</span><label>Seconds</label></div>
+  <!-- 8. FAMILY -->
+  <section id="family" class="page family-page">
+    <div class="family-glow"></div>
+    <div class="family-head">
+      <div class="smallcaps">WITH LOVE &amp; BLESSINGS</div>
+      <h2>Our Families</h2>
     </div>
-    <p class="quote-line">Some souls don't just meet,<br>they find home in each other.</p>
-    <h3 class="dh-mono small">D <span class="heart">♡</span> H</h3>
-    <button class="next-arrow" data-next aria-label="Next">›</button>
-  </section>
-
-  <!-- SCREEN 9 : OUR FAMILIES (NEW PAGE) -->
-  <section class="screen families-screen" data-screen="8">
-    <button class="music-btn"><svg viewBox="0 0 24 24" class="note-icon"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></button>
-    <p class="tiny-label">WITH LOVE &amp; BLESSINGS</p>
-    <h2 class="script-title">Our Families</h2>
-
     <div class="family-card">
-      <p class="family-tag">GROOM'S FAMILY</p>
-      <p class="family-name">Danveer Singh</p>
-      <div class="family-row"><span>Father</span><span>Harvinder Singh</span></div>
-      <div class="family-row"><span>Mother</span><span>Vivek Kaur</span></div>
+      <div class="family-label">GROOM'S FAMILY</div>
+      <h3>Danveer Singh</h3>
+      <div class="family-row"><span>Father</span><b>Harvinder Singh</b></div>
+      <div class="family-row"><span>Mother</span><b>Vivek Kaur</b></div>
     </div>
-
-    <div class="heart-divider small">♡</div>
-
+    <div class="family-heart">♡</div>
     <div class="family-card">
-      <p class="family-tag">BRIDE'S FAMILY</p>
-      <p class="family-name">Harman Preet Kaur</p>
-      <div class="family-row"><span>Father</span><span>Mandeep Singh</span></div>
-      <div class="family-row"><span>Mother</span><span>Parminder Kaur</span></div>
-      <div class="family-row"><span>Brother</span><span>Prabhjot Singh</span></div>
-      <div class="family-row"><span>Grandmother</span><span>Manjeet Kaur</span></div>
+      <div class="family-label">BRIDE'S FAMILY</div>
+      <h3>Harman Preet Kaur</h3>
+      <div class="family-row"><span>Father</span><b>Mandeep Singh</b></div>
+      <div class="family-row"><span>Mother</span><b>Parminder Kaur</b></div>
+      <div class="family-row"><span>Brother</span><b>Prabhjot Singh</b></div>
+      <div class="family-row"><span>Grandmother</span><b>Manjeet Kaur</b></div>
     </div>
-
-    <button class="cta-btn" id="restartBtn">View Invitation Again <span class="arrow">↺</span></button>
+    <button class="gold-btn" onclick="scrollToId('blessings')">With Blessings ↓</button>
   </section>
 
-</div>
+  <!-- 9. SIKH WELCOME / BLESSINGS -->
+  <section id="blessings" class="page blessings-page">
+    <div class="khanda">☬</div>
+    <div class="smallcaps">WITH THE BLESSINGS OF WAHEGURU</div>
+    <h2>ੴ</h2>
+    <p class="mool">ਸਤਿ ਨਾਮੁ ਕਰਤਾ ਪੁਰਖੁ<br>ਨਿਰਭਉ ਨਿਰਵੈਰੁ<br>ਅਕਾਲ ਮੂਰਤਿ ਅਜੂਨੀ ਸੈਭੰ<br>ਗੁਰ ਪ੍ਰਸਾਦਿ ॥</p>
+    <div class="divider">♥</div>
+    <p class="blessing-text">May Waheguru bless the union of<br>Danveer &amp; Harman Preet with love,<br>peace, chardi kala and togetherness.</p>
+    <p class="ending">We would be honoured by your presence.</p>
+    <button class="gold-btn" onclick="scrollToId('cover')">View Invitation Again ↻</button>
+  </section>
+</main>
 
 <script src="script.js"></script>
 </body>
