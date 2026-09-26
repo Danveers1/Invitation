@@ -80,12 +80,14 @@ button{cursor:pointer;}
 .soft-mask,.special-overlay{
   position:absolute;pointer-events:none;z-index:1;
 }
-.couple-mask{inset:0 0 auto;height:31%;background:linear-gradient(180deg,rgba(248,231,218,.96),rgba(248,231,218,.78),transparent)}
-.scratch-mask{inset:0 0 auto;height:39%;background:linear-gradient(180deg,rgba(247,229,217,.96),rgba(247,229,217,.82),transparent)}
-.date-mask{inset:0 0 0 0;background:linear-gradient(180deg,rgba(248,230,219,.9) 0%,rgba(248,230,219,.62) 48%,rgba(248,230,219,.82) 100%)}
-.welcome-mask{inset:0 0 auto;height:55%;background:linear-gradient(180deg,rgba(248,230,219,.93),rgba(248,230,219,.76),transparent)}
-.countdown-mask{inset:0;background:rgba(247,227,216,.84)}
-.special-overlay{inset:0;background:rgba(247,227,216,.84)}
+.couple-mask{opacity:.99;inset:0 0 auto;height:61%;;background:linear-gradient(180deg,rgba(248,231,218,.50),rgba(248,231,218,.30),transparent)}
+.scratch-mask{inset:0 0 auto;height:99%;background:linear-gradient(180deg,rgba(247,229,217,.99),rgba(247,229,217,.34),#e7e0e000)}
+.date-mask{inset:0 0 0 0;background:linear-gradient(180deg,rgba(248,230,219,.1) 0%,rgba(248,230,219,.2) 48%,rgba(248,230,219,.65) 100%)}
+.welcome-mask{inset:0 0 auto;height:95%;background:linear-gradient(180deg,rgba(248,230,219,.34),rgba(248,230,219,.34),transparent)}
+.countdown-mask{inset:0;background:rgba(247,227,216,.34)}
+.special-overlay{inset:0;background:rgba(247,227,216,.34)}
+
+
 
 .couple-copy,.scratch-copy,.date-copy,.welcome-copy,.count-copy,.special-copy{
   position:relative;z-index:3;text-align:center;color:var(--ink);width:min(88%,420px);
