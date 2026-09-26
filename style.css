@@ -39,10 +39,10 @@ button{cursor:pointer;}
 .open-bg{background-image:url("assets/open.jpg");}
 .couple-bg{background-image:url("assets/couple.jpg");}
 .scratch-bg{background-image:url("assets/scratch.jpg");}
-.date-bg{background-image:url("assets/date.jpg");}
+.date-bg{background-image:url("assets/scratch.jpg");}
 .welcome-bg{background-image:url("assets/welcome.jpg");}
 .countdown-bg{background-image:url("assets/countdown.jpg");}
-.special-bg{background-image:url("assets/special.jpg");}
+.special-bg{background-image:url("assets/scratch.jpg");}
 
 .page:after{
   content:"";position:absolute;inset:0;pointer-events:none;
