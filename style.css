@@ -41,7 +41,7 @@ button{cursor:pointer;}
 .scratch-bg{background-image:url("assets/scratch.jpg");}
 .date-bg{background-image:url("assets/scratch.jpg");}
 .welcome-bg{background-image:url("assets/welcome.jpg");}
-.countdown-bg{background-image:url("assets/countdown.jpg");}
+.countdown-bg{background-image:url("assets/scratch.jpg");}
 .special-bg{background-image:url("assets/scratch.jpg");}
 
 .page:after{
